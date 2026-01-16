@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Heart, Zap, Shield } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import Navbar from "../layout/Navbar";
 
 // Counter Component - This makes numbers count!
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -86,6 +87,8 @@ export default function Hero() {
   ];
 
   return (
+    <>
+    <Navbar />
     <section 
       id="home" 
       ref={containerRef}
@@ -302,5 +305,6 @@ export default function Hero() {
         </div>
       </motion.div>
     </section>
+    </>
   );
 }

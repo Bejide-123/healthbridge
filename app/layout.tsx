@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +23,6 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} antialiased bg-gradient-to-b from-slate-50 to-white`}>
-        <Navbar />
         <main className="min-h-screen pt-20"> {/* Padding for fixed navbar */}
           {children}
         </main>
