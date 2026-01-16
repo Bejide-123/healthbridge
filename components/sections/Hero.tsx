@@ -90,7 +90,7 @@ export default function Hero() {
       id="home" 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 sm:pt-20 pb-20 sm:pb-32"
     >
       {/* Dynamic gradient background */}
       <div 
