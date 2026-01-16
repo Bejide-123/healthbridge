@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Stethoscope } from "lucide-react";
+import { useRouter } from "next/navigation"
 
 // Define the type for nav items
 type NavItem = {
@@ -13,6 +14,7 @@ type NavItem = {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +94,7 @@ export default function Navbar() {
           {/* RIGHT: Auth Buttons in Pills (Desktop) */}
           <div className="hidden lg:flex items-center gap-3">
             <button
-              onClick={() => alert("Login page coming soon!")}
+              onClick={() => router.push("/login")}
               className={`px-6 py-2.5 text-sm font-medium rounded-full backdrop-blur-xl border transition-all duration-300 hover:scale-105 ${
                 scrolled
                   ? "bg-white/70 border-slate-200/50 text-slate-700 hover:bg-white/90 shadow-lg"
@@ -156,7 +158,7 @@ export default function Navbar() {
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    alert("Login page coming soon!");
+                    router.push("/login");
                   }}
                   className="w-full px-5 py-3 text-sm font-medium rounded-2xl bg-white/60 hover:bg-white/80 text-slate-700 border border-slate-200/50 transition-all"
                 >
