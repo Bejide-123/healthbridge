@@ -1,0 +1,6 @@
+/* Add any custom CSS here */
+@media (max-width: 768px) {
+  .tilt-card {
+    transform: none !important;
+  }
+}

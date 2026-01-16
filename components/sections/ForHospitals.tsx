@@ -395,7 +395,7 @@ export default function ForHospitals() {
   ];
 
   return (
-    <section id="for-hospitals" className="relative py-24 overflow-hidden">
+    <section id="for-hospitals" className="relative py-16 sm:py-24 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-teal-50/20" />
       
@@ -545,7 +545,7 @@ export default function ForHospitals() {
           </div>
           
           {/* Process cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {processes.map((process, index) => (
               <ProcessCard
                 key={index}

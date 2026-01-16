@@ -72,7 +72,7 @@ export default function Navbar() {
           </a>
 
           {/* CENTER: Navigation Links in Pill (Desktop) */}
-          <div className="hidden lg:flex flex-1 justify-center">
+          <div className="hidden md:flex flex-1 justify-center">
             <div className={`flex items-center gap-1 px-3 py-2 rounded-full backdrop-blur-xl border transition-all duration-300 ${
               scrolled 
                 ? "bg-white/70 border-slate-200/50 shadow-lg" 
@@ -92,7 +92,7 @@ export default function Navbar() {
           </div>
 
           {/* RIGHT: Auth Buttons in Pills (Desktop) */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => router.push("/login")}
               className={`px-6 py-2.5 text-sm font-medium rounded-full backdrop-blur-xl border transition-all duration-300 hover:scale-105 ${
@@ -113,7 +113,7 @@ export default function Navbar() {
           </div>
 
           {/* MOBILE & TABLET: Simple Get Started Button (for medium screens) */}
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex md:hidden items-center gap-3">
             <button
               onClick={() => handleNavClick("#contact")}
               className="px-4 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white shadow-lg hover:shadow-xl transition-all"
@@ -142,7 +142,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden mt-4"
+            className="md:hidden mt-4"
           >
             <div className="flex flex-col gap-2 bg-white/80 backdrop-blur-xl rounded-3xl p-4 shadow-2xl border border-slate-200/50">
               {navItems.map((item) => (

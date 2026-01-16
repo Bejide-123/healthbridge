@@ -93,7 +93,7 @@ export default function Hero() {
       id="home" 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 sm:pt-20 pb-20 sm:pb-32"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-28 pb-24 md:pb-32"
     >
       {/* Dynamic gradient background */}
       <div 
@@ -191,7 +191,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-4"
+            className="text-center text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed"
           >
             Streamline hospital operations with smart scheduling, digital payments, 
             and AI-powered health guidance. <span className="font-semibold text-slate-700">Reduce wait times by 40%</span> and transform patient care.
@@ -202,7 +202,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16"
           >
             <button
               onClick={() => {
@@ -234,7 +234,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 px-4"
+            className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16"
           >
             {[
               { icon: Zap, text: "Instant Booking" },
@@ -259,7 +259,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto px-4"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
           >
             {stats.map((stat, index) => (
               <StatCard

@@ -359,7 +359,7 @@ export default function ForPatients() {
   ];
 
   return (
-    <section id="for-patients" className="relative py-24 overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+    <section id="for-patients" className="relative py-16 sm:py-24 overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[
@@ -485,7 +485,7 @@ export default function ForPatients() {
             {/* Connecting line */}
             <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-teal-500 to-purple-500 transform -translate-y-1/2 hidden lg:block" />
             
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
               {howItWorks.map((step, index) => (
                 <motion.div
                   key={index}

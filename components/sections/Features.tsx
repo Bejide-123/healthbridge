@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { 
   Calendar, CreditCard, Ambulance, FileText, 
   Brain, Pill, Shield, Zap, Users, 
-  Clock, Bell, TrendingUp, Globe
+  Clock, Bell, TrendingUp, Globe, ArrowRight
 } from "lucide-react";
 
 // Tilt card component with 3D effect
@@ -61,7 +61,7 @@ function TiltCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative group cursor-pointer"
+      className="relative group cursor-pointer tilt-card"
       style={{
         transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
         transition: "transform 0.2s ease-out",
@@ -127,13 +127,6 @@ function TiltCard({
   );
 }
 
-// ArrowRight icon component (add this if not imported)
-const ArrowRight = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-  </svg>
-);
-
 export default function Features() {
   const features = [
     {
@@ -187,7 +180,7 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="relative py-24 overflow-hidden">
+    <section id="features" className="relative py-16 sm:py-24 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-blue-50/30" />
       
@@ -259,7 +252,7 @@ export default function Features() {
         </motion.div>
 
         {/* Feature grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <TiltCard
               key={index}
@@ -316,14 +309,7 @@ export default function Features() {
             className="group px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 inline-flex items-center"
           >
             See Pricing Plans
-            <svg 
-              className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+            <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
           </button>
           
           <p className="mt-4 text-slate-500 text-sm">

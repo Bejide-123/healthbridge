@@ -165,7 +165,7 @@ export default function RegisterPage() {
           </Link>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 max-w-7xl mx-auto flex-1 px-4 pt-8 sm:pt-12">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 max-w-7xl mx-auto flex-1 px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
           {/* Left side - Branding & Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
