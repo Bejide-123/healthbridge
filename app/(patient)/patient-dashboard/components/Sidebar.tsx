@@ -7,8 +7,9 @@ import {
   CreditCard, Ambulance, MessageSquare, User,
   Bell, HelpCircle, LogOut, Menu, X,
   ChevronRight, Shield, Hospital, Clock,
-  Activity, TrendingUp, Brain, Stethoscope,
-  Heart, Zap, Smartphone, ArrowRight
+  Activity, Brain, Stethoscope,
+  Heart, Zap, Smartphone, ArrowRight,
+  ChevronUp, ChevronDown, Info, Activity as ActivityIcon
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,29 +24,30 @@ interface SidebarItem {
 
 export default function DashboardSidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [infoSectionOpen, setInfoSectionOpen] = useState(false);
   const pathname = usePathname();
 
   const sidebarItems: SidebarItem[] = [
-    { name: "Dashboard", href: "/patients-dashboard", icon: LayoutDashboard },
-    { name: "Appointments", href: "/patients-dashboard/appointments", icon: Calendar, badge: 2 },
-    { name: "Medical Records", href: "/patients-dashboard/medical-records", icon: FileText },
-    { name: "Prescriptions", href: "/patients-dashboard/prescriptions", icon: Pill, badge: 1 },
-    { name: "Lab Results", href: "/patients-dashboard/lab-results", icon: Activity },
-    { name: "Payments", href: "/patients-dashboard/payments", icon: CreditCard },
-    { name: "Emergency", href: "/patients-dashboard/emergency", icon: Ambulance },
-    { name: "AI Assistant", href: "/patients-dashboard/ai-assistant", icon: Brain },
-    { name: "Health Tracker", href: "/patients-dashboard/health-tracker", icon: Heart },
-    { name: "Telemedicine", href: "/patients-dashboard/telemedicine", icon: Smartphone },
-    { name: "Profile", href: "/patients-dashboard/profile", icon: User },
-    { name: "Notifications", href: "/patients-dashboard/notifications", icon: Bell, badge: 3 },
-    { name: "Help", href: "/patients-dashboard/help", icon: HelpCircle },
+    { name: "Dashboard", href: "/patient-dashboard", icon: LayoutDashboard },
+    { name: "Appointments", href: "/patient-dashboard/appointments", icon: Calendar, badge: 2 },
+    { name: "Medical Records", href: "/patient-dashboard/medical-records", icon: FileText },
+    { name: "Prescriptions", href: "/patient-dashboard/prescriptions", icon: Pill, badge: 1 },
+    { name: "Lab Results", href: "/patient-dashboard/lab-results", icon: ActivityIcon },
+    { name: "Payments", href: "/patient-dashboard/payments", icon: CreditCard },
+    { name: "Emergency", href: "/patient-dashboard/emergency", icon: Ambulance },
+    { name: "AI Assistant", href: "/patient-dashboard/ai-assistant", icon: Brain },
+    { name: "Health Tracker", href: "/patient-dashboard/health-tracker", icon: Heart },
+    { name: "Telemedicine", href: "/patient-dashboard/telemedicine", icon: Smartphone },
+    { name: "Profile", href: "/patient-dashboard/profile", icon: User },
+    { name: "Notifications", href: "/patient-dashboard/notifications", icon: Bell, badge: 3 },
+    { name: "Help", href: "/patient-dashboard/help", icon: HelpCircle },
   ];
 
   const quickActions = [
-    { name: "Book Appointment", href: "/patients-dashboard/appointments/book", icon: Calendar, color: "from-blue-500 to-cyan-500" },
-    { name: "Request Ambulance", href: "/patients-dashboard/emergency", icon: Ambulance, color: "from-red-500 to-rose-500" },
-    { name: "Chat with AI", href: "/patients-dashboard/ai-assistant", icon: MessageSquare, color: "from-purple-500 to-violet-500" },
-    { name: "View Records", href: "/patients-dashboard/medical-records", icon: FileText, color: "from-teal-500 to-emerald-500" },
+    { name: "Book Appointment", href: "/patient-dashboard/appointments/book", icon: Calendar, color: "from-blue-500 to-cyan-500" },
+    { name: "Request Ambulance", href: "/patient-dashboard/emergency", icon: Ambulance, color: "from-red-500 to-rose-500" },
+    { name: "Chat with AI", href: "/patient-dashboard/ai-assistant", icon: MessageSquare, color: "from-purple-500 to-violet-500" },
+    { name: "View Records", href: "/patient-dashboard/medical-records", icon: FileText, color: "from-teal-500 to-emerald-500" },
   ];
 
   const isActive = (href: string) => {
@@ -226,58 +228,144 @@ export default function DashboardSidebar() {
 
           {/* Sidebar footer */}
           <div className="border-t border-slate-200/50 p-6">
-            <button className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-all group">
-              <div className="p-2 rounded-lg bg-slate-100 text-slate-600 group-hover:bg-slate-200">
-                <LogOut className="w-5 h-5" />
-              </div>
-              <span className="font-medium flex-1">Sign Out</span>
-            </button>
-            
-            {/* Hospital info */}
-            <motion.div 
-              className="mt-4 p-3 rounded-lg bg-gradient-to-br from-blue-50/50 to-cyan-50/50 border border-blue-100/50"
+            {/* Toggle button for additional info */}
+            <motion.button
+              onClick={() => setInfoSectionOpen(!infoSectionOpen)}
+              className="w-full mb-4 flex items-center justify-between px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors group"
               whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="flex items-center gap-2 mb-1">
-                <Hospital className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700">Lagos University Teaching Hospital</span>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-teal-500 text-white">
+                  <Info className="w-4 h-4" />
+                </div>
+                <span className="font-medium">Additional Info</span>
               </div>
-              <div className="text-xs text-blue-600/80">Your registered hospital</div>
-              <div className="flex items-center gap-2 mt-2 text-xs text-slate-600">
-                <Clock className="w-3 h-3" />
-                <span>Open: 8AM - 6PM</span>
-              </div>
-              <div className="flex items-center gap-2 mt-1 text-xs text-slate-600">
-                <Stethoscope className="w-3 h-3" />
-                <span>Emergency: 24/7</span>
-              </div>
-            </motion.div>
+              {infoSectionOpen ? (
+                <ChevronUp className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+              )}
+            </motion.button>
 
-            {/* Health metrics */}
-            <motion.div 
-              className="mt-4 p-3 rounded-lg bg-gradient-to-br from-green-50/50 to-emerald-50/50 border border-green-100/50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+            {/* Collapsible info section */}
+            <AnimatePresence>
+              {infoSectionOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  {/* Hospital info */}
+                  <motion.div 
+                    className="mb-4 p-3 rounded-lg bg-gradient-to-br from-blue-50/50 to-cyan-50/50 border border-blue-100/50"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <Hospital className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-medium text-blue-700">Lagos University Teaching Hospital</span>
+                    </div>
+                    <div className="text-xs text-blue-600/80">Your registered hospital</div>
+                    <div className="flex items-center gap-2 mt-2 text-xs text-slate-600">
+                      <Clock className="w-3 h-3" />
+                      <span>Open: 8AM - 6PM</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1 text-xs text-slate-600">
+                      <Stethoscope className="w-3 h-3" />
+                      <span>Emergency: 24/7</span>
+                    </div>
+                  </motion.div>
+
+                  {/* Health metrics */}
+                  <motion.div 
+                    className="mb-4 p-3 rounded-lg bg-gradient-to-br from-green-50/50 to-emerald-50/50 border border-green-100/50"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <ActivityIcon className="w-4 h-4 text-green-600" />
+                      <span className="text-sm font-medium text-green-700">Health Score</span>
+                    </div>
+                    <div className="relative h-2 bg-green-100 rounded-full overflow-hidden">
+                      <motion.div 
+                        className="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-emerald-500"
+                        initial={{ width: 0 }}
+                        animate={{ width: "85%" }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                      />
+                    </div>
+                    <div className="flex justify-between mt-1 text-xs text-green-700">
+                      <span>85%</span>
+                      <span className="font-medium">Excellent</span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Enhanced Sign Out button */}
+            <motion.button
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white font-medium hover:shadow-lg transition-all group relative overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)"
+              }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-medium text-green-700">Health Score</span>
+              {/* Red gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Glow effect on hover */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
+              
+              {/* Icon with animation */}
+              <motion.div 
+                className="relative z-10 p-2 rounded-lg bg-white/20 backdrop-blur-sm"
+                whileHover={{ rotate: 90 }}
+                transition={{ duration: 0.3 }}
+              >
+                <LogOut className="w-5 h-5 text-white" />
+              </motion.div>
+              
+              {/* Text with animation */}
+              <span className="font-medium flex-1 text-left relative z-10">Sign Out</span>
+              
+              {/* Animated arrow */}
+              <motion.div
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="relative z-10"
+              >
+                <ArrowRight className="w-4 h-4 text-white/80" />
+              </motion.div>
+              
+              {/* Hover particles */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-white rounded-full"
+                    style={{
+                      left: `${10 + i * 20}%`,
+                      top: "20%",
+                    }}
+                    initial={{ y: 0, opacity: 0 }}
+                    animate={{ y: -10, opacity: 1 }}
+                    transition={{ 
+                      duration: 0.5, 
+                      delay: i * 0.1,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                  />
+                ))}
               </div>
-              <div className="relative h-2 bg-green-100 rounded-full overflow-hidden">
-                <motion.div 
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-emerald-500"
-                  initial={{ width: 0 }}
-                  animate={{ width: "85%" }}
-                  transition={{ duration: 1, delay: 0.6 }}
-                />
-              </div>
-              <div className="flex justify-between mt-1 text-xs text-green-700">
-                <span>85%</span>
-                <span className="font-medium">Excellent</span>
-              </div>
-            </motion.div>
+            </motion.button>
           </div>
         </div>
       </motion.aside>

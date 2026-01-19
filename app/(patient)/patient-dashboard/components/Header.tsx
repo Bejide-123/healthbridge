@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,16 +6,20 @@ import { usePathname } from "next/navigation";
 import { 
   Menu, Bell, Search, MessageSquare, 
   ChevronRight, Ambulance, Zap, TrendingUp,
-  Settings, User, Moon, Sun
+  Settings, User, Moon, Sun,
+  X, Home, ChevronDown, Plus
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DashboardHeader() {
   const pathname = usePathname();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const getPageTitle = () => {
-    const path = pathname.replace('/patients-dashboard', '');
+    const path = pathname.replace('/patient-dashboard', '');
     if (path === '' || path === '/') return "Dashboard Overview";
     if (path.includes('/appointments')) return "Appointments";
     if (path.includes('/medical-records')) return "Medical Records";
@@ -33,138 +36,354 @@ export default function DashboardHeader() {
     return "Dashboard";
   };
 
-  return (
-    <motion.header 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="sticky top-0 z-40 border-b border-slate-200/50 bg-white/80 backdrop-blur-xl"
-    >
-      <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => {
-              // You'll need to handle sidebar toggle here
-              // You can use context or a state management solution
-            }}
-            className="p-2 rounded-lg hover:bg-slate-100 lg:hidden transition-colors"
-          >
-            <Menu className="w-5 h-5 text-slate-600" />
-          </button>
-          
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm">
-            <Link href="/patients-dashboard" className="text-slate-500 hover:text-slate-700 transition-colors">
-              Dashboard
-            </Link>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-            <span className="font-medium text-slate-900">
-              {getPageTitle()}
-            </span>
-          </div>
-        </div>
+  const quickActions = [
+    { icon: Plus, label: "Book Appointment", href: "/patient-dashboard/appointments/book", color: "bg-blue-500" },
+    { icon: Bell, label: "Notifications", href: "/patient-dashboard/notifications", color: "bg-purple-500" },
+    { icon: Ambulance, label: "Emergency", href: "/patient-dashboard/emergency", color: "bg-red-500" },
+    { icon: MessageSquare, label: "Messages", href: "/patient-dashboard/messages", color: "bg-green-500" },
+  ];
 
-        <div className="flex items-center gap-4">
-          {/* Search */}
-          <div className="relative hidden md:block">
+  return (
+    <>
+      {/* Mobile Search Overlay */}
+      <AnimatePresence>
+        {showSearch && (
+          <>
             <motion.div
-              whileFocus={{ scale: 1.02 }}
-              className="relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSearch(false)}
+              className="fixed inset-0 z-50 bg-black/50 lg:hidden"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed top-4 left-4 right-4 z-50 lg:hidden"
             >
-              <input
-                type="search"
-                placeholder="Search records, doctors..."
-                className="w-64 pl-10 pr-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-              />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                <Search className="w-4 h-4 text-slate-400" />
+              <div className="relative">
+                <input
+                  type="search"
+                  placeholder="Search records, doctors..."
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none shadow-xl"
+                  autoFocus
+                />
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                  <Search className="w-5 h-5 text-slate-400" />
+                </div>
+                <button
+                  onClick={() => setShowSearch(false)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 p-1"
+                >
+                  <X className="w-5 h-5 text-slate-400" />
+                </button>
               </div>
             </motion.div>
-          </div>
+          </>
+        )}
+      </AnimatePresence>
 
-          {/* Theme toggle */}
-          <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
-          >
-            {isDarkMode ? (
-              <Sun className="w-5 h-5 text-slate-600" />
-            ) : (
-              <Moon className="w-5 h-5 text-slate-600" />
-            )}
-          </button>
-
-          {/* Notifications */}
-          <button className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors">
-            <Bell className="w-5 h-5 text-slate-600" />
-            <motion.span 
-              className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-rose-500 rounded-full text-xs text-white flex items-center justify-center"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              3
-            </motion.span>
-          </button>
-
-          {/* Messages */}
-          <button className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors">
-            <MessageSquare className="w-5 h-5 text-slate-600" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full" />
-          </button>
-
-          {/* Settings */}
-          <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
-            <Settings className="w-5 h-5 text-slate-600" />
-          </button>
-
-          {/* Emergency button */}
+      {/* Mobile Quick Actions Bar */}
+      <AnimatePresence>
+        {showMobileMenu && (
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-20 left-4 right-4 z-40 bg-white rounded-2xl shadow-2xl border border-slate-200 lg:hidden"
           >
-            <Link
-              href="/patients-dashboard/emergency"
-              className="px-4 py-2.5 rounded-full bg-gradient-to-r from-red-500 to-rose-500 text-white font-medium hover:from-red-600 hover:to-rose-600 hover:shadow-lg transition-all flex items-center gap-2"
-            >
-              <Ambulance className="w-4 h-4" />
-              <span>Emergency</span>
-            </Link>
-          </motion.div>
-
-          {/* Profile */}
-          <div className="relative group">
-            <button className="flex items-center gap-2 p-1 rounded-lg hover:bg-slate-100 transition-colors">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                <span className="text-white text-sm font-bold">JD</span>
+            <div className="p-4">
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                {quickActions.map((action, index) => (
+                  <Link
+                    key={index}
+                    href={action.href}
+                    onClick={() => setShowMobileMenu(false)}
+                    className="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-slate-50 transition-colors"
+                  >
+                    <div className={`w-10 h-10 rounded-full ${action.color} flex items-center justify-center mb-2`}>
+                      <action.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="text-xs font-medium text-slate-700 text-center">{action.label}</span>
+                  </Link>
+                ))}
               </div>
-            </button>
-            
-            {/* Dropdown menu */}
-            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-              <div className="p-4 border-b border-slate-100">
-                <div className="font-medium text-slate-900">John Doe</div>
-                <div className="text-sm text-slate-500">Patient #HB234567</div>
-              </div>
-              <div className="p-2">
-                <Link href="/patients-dashboard/profile" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700">
-                  <User className="w-4 h-4" />
-                  <span>Profile Settings</span>
-                </Link>
-                <Link href="/patients-dashboard/health-tracker" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>Health Tracker</span>
-                </Link>
-                <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 w-full">
+              <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                <button className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
                   <Moon className="w-4 h-4" />
-                  <span>Dark Mode</span>
-                  <div className="ml-auto w-10 h-6 rounded-full bg-slate-200 relative">
-                    <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform" />
-                  </div>
+                  <span className="text-sm">Theme</span>
+                </button>
+                <button className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
+                  <Settings className="w-4 h-4" />
+                  <span className="text-sm">Settings</span>
                 </button>
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Header */}
+      <motion.header 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="sticky top-0 z-40 border-b border-slate-200/50 bg-white/80 backdrop-blur-xl"
+      >
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
+          {/* Left Section */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="p-2 rounded-lg hover:bg-slate-100 lg:hidden transition-colors"
+            >
+              {showMobileMenu ? (
+                <X className="w-5 h-5 text-slate-600" />
+              ) : (
+                <Menu className="w-5 h-5 text-slate-600" />
+              )}
+            </button>
+            
+            {/* Logo for mobile */}
+            <Link href="/patient-dashboard" className="lg:hidden">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center">
+                <Home className="w-4 h-4 text-white" />
+              </div>
+            </Link>
+            
+            {/* Breadcrumb */}
+            <div className="hidden sm:flex items-center gap-2 text-sm">
+              <Link href="/patient-dashboard" className="text-slate-500 hover:text-slate-700 transition-colors flex items-center gap-1">
+                <Home className="w-3 h-3" />
+                <span>Dashboard</span>
+              </Link>
+              <ChevronRight className="w-3 h-3 text-slate-400 flex-shrink-0" />
+              <span className="font-medium text-slate-900 truncate max-w-[150px] sm:max-w-none">
+                {getPageTitle()}
+              </span>
+            </div>
+
+            {/* Mobile Page Title */}
+            <div className="sm:hidden">
+              <span className="font-medium text-slate-900 text-sm truncate max-w-[120px]">
+                {getPageTitle()}
+              </span>
+            </div>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Mobile Search Button */}
+            <button
+              onClick={() => setShowSearch(true)}
+              className="p-2 rounded-lg hover:bg-slate-100 lg:hidden transition-colors"
+            >
+              <Search className="w-5 h-5 text-slate-600" />
+            </button>
+
+            {/* Desktop Search */}
+            <div className="hidden lg:block">
+              <motion.div
+                whileFocus={{ scale: 1.02 }}
+                className="relative"
+              >
+                <input
+                  type="search"
+                  placeholder="Search..."
+                  className="w-48 xl:w-64 pl-10 pr-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+                />
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <Search className="w-4 h-4 text-slate-400" />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Action Buttons - Desktop */}
+            <div className="hidden lg:flex items-center gap-2">
+              {/* Theme toggle */}
+              <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {isDarkMode ? (
+                  <Sun className="w-5 h-5 text-slate-600" />
+                ) : (
+                  <Moon className="w-5 h-5 text-slate-600" />
+                )}
+              </button>
+
+              {/* Notifications */}
+              <button 
+                className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell className="w-5 h-5 text-slate-600" />
+                <motion.span 
+                  className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-red-500 to-rose-500 rounded-full text-xs text-white flex items-center justify-center"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  3
+                </motion.span>
+              </button>
+
+              {/* Messages */}
+              <button 
+                className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Messages"
+              >
+                <MessageSquare className="w-5 h-5 text-slate-600" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full" />
+              </button>
+
+              {/* Settings */}
+              <button 
+                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Settings"
+              >
+                <Settings className="w-5 h-5 text-slate-600" />
+              </button>
+            </div>
+
+            {/* Mobile Action Buttons */}
+            <div className="flex lg:hidden items-center gap-1">
+              {/* Notifications */}
+              <button 
+                className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell className="w-5 h-5 text-slate-600" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center">
+                  3
+                </span>
+              </button>
+            </div>
+
+            {/* Emergency button - Desktop */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden sm:block"
+            >
+              <Link
+                href="/patient-dashboard/emergency"
+                className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-red-500 to-rose-500 text-white font-medium hover:from-red-600 hover:to-rose-600 hover:shadow-lg transition-all flex items-center gap-2 text-sm sm:text-base"
+              >
+                <Ambulance className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden lg:inline">Emergency</span>
+                <span className="lg:hidden">EMS</span>
+              </Link>
+            </motion.div>
+
+            {/* Emergency button - Mobile */}
+            <Link
+              href="/patient-dashboard/emergency"
+              className="sm:hidden w-10 h-10 rounded-full bg-gradient-to-r from-red-500 to-rose-500 text-white flex items-center justify-center hover:shadow-lg transition-all"
+              aria-label="Emergency"
+            >
+              <Ambulance className="w-5 h-5" />
+            </Link>
+
+            {/* Profile */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                className="flex items-center gap-2 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Profile menu"
+              >
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">JD</span>
+                </div>
+                <ChevronDown className="w-4 h-4 text-slate-400 hidden lg:block" />
+              </button>
+              
+              {/* Dropdown menu */}
+              <AnimatePresence>
+                {showProfileDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    onClick={() => setShowProfileDropdown(false)}
+                    className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-50"
+                  >
+                    <div className="p-4 border-b border-slate-100">
+                      <div className="font-medium text-slate-900">John Doe</div>
+                      <div className="text-sm text-slate-500">Patient #HB234567</div>
+                    </div>
+                    <div className="p-2">
+                      <Link 
+                        href="/patient-dashboard/profile" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700"
+                        onClick={() => setShowProfileDropdown(false)}
+                      >
+                        <User className="w-4 h-4" />
+                        <span>Profile Settings</span>
+                      </Link>
+                      <Link 
+                        href="/patient-dashboard/health-tracker" 
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700"
+                        onClick={() => setShowProfileDropdown(false)}
+                      >
+                        <TrendingUp className="w-4 h-4" />
+                        <span>Health Tracker</span>
+                      </Link>
+                      <button 
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 w-full"
+                        onClick={() => setIsDarkMode(!isDarkMode)}
+                      >
+                        {isDarkMode ? (
+                          <Sun className="w-4 h-4" />
+                        ) : (
+                          <Moon className="w-4 h-4" />
+                        )}
+                        <span>Dark Mode</span>
+                        <div className="ml-auto w-10 h-6 rounded-full bg-slate-200 relative">
+                          <div 
+                            className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
+                              isDarkMode ? 'translate-x-5' : 'translate-x-1'
+                            }`}
+                          />
+                        </div>
+                      </button>
+                      <div className="mt-2 pt-2 border-t border-slate-100">
+                        <Link 
+                          href="/signout" 
+                          className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 text-red-600"
+                          onClick={() => setShowProfileDropdown(false)}
+                        >
+                          <Settings className="w-4 h-4" />
+                          <span>Sign Out</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.header>
+
+        {/* Mobile Quick Actions */}
+        <div className="lg:hidden border-t border-slate-200/50 bg-white/50">
+          <div className="flex items-center justify-around px-4 py-2">
+            {quickActions.slice(0, 4).map((action, index) => (
+              <Link
+                key={index}
+                href={action.href}
+                className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                <div className={`w-8 h-8 rounded-full ${action.color} flex items-center justify-center mb-1`}>
+                  <action.icon className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-xs font-medium text-slate-700">{action.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </motion.header>
+    </>
   );
 }
