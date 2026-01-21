@@ -15,6 +15,14 @@ html {
   }
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Keyframes for animations */
 @keyframes gradient {
   0% { background-position: 0% 50%; }
