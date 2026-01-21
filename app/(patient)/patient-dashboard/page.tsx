@@ -492,8 +492,8 @@ export default function DashboardPage() {
     },
     { 
       title: "Lab Results", 
-      description: "Get 24/7 health guidance", 
-      icon: Brain, 
+      description: "View your test results and reports", 
+      icon: Activity, 
       href: "/patient-dashboard/lab-results",
       color: "purple" as const,
       badge: "New"
@@ -515,17 +515,17 @@ export default function DashboardPage() {
   ];
 
   const healthReminders = [
-    { title: "Blood Pressure Check", time: "Daily at 8:00 AM", icon: Activity, status: "pending" },
-    { title: "Medication Refill", time: "Due in 3 days", icon: Pill, status: "warning" },
-    { title: "Annual Checkup", time: "Scheduled for next month", icon: Calendar, status: "scheduled" },
-    { title: "Flu Vaccine", time: "Overdue by 2 weeks", icon: Thermometer, status: "overdue" },
+    { title: "Blood Pressure Check", time: "Daily at 8:00 AM", icon: Activity, status: "pending" as const },
+    { title: "Medication Refill", time: "Due in 3 days", icon: Pill, status: "warning" as const },
+    { title: "Annual Checkup", time: "Scheduled for next month", icon: Calendar, status: "scheduled" as const },
+    { title: "Flu Vaccine", time: "Overdue by 2 weeks", icon: Thermometer, status: "overdue" as const },
   ];
 
   const recentActivities = [
-    { icon: FileText, title: "Lab Result Added", description: "Blood test results uploaded", time: "2 hours ago", color: "from-purple-500 to-violet-500", action: "viewed" },
-    { icon: CreditCard, title: "Payment Completed", description: "Consultation fee paid online", time: "1 day ago", color: "from-green-500 to-lime-500", action: "paid" },
-    { icon: Calendar, title: "Appointment Booked", description: "Follow-up with Dr. Adebola", time: "3 days ago", color: "from-blue-500 to-cyan-500", action: "scheduled" },
-    { icon: UserCheck, title: "Profile Updated", description: "Emergency contact added", time: "5 days ago", color: "from-orange-500 to-amber-500", action: "updated" },
+    { icon: FileText, title: "Lab Result Added", description: "Blood test results uploaded", time: "2 hours ago", color: "from-purple-500 to-violet-500", action: "viewed" as const },
+    { icon: CreditCard, title: "Payment Completed", description: "Consultation fee paid online", time: "1 day ago", color: "from-green-500 to-lime-500", action: "paid" as const },
+    { icon: Calendar, title: "Appointment Booked", description: "Follow-up with Dr. Adebola", time: "3 days ago", color: "from-blue-500 to-cyan-500", action: "scheduled" as const },
+    { icon: UserCheck, title: "Profile Updated", description: "Emergency contact added", time: "5 days ago", color: "from-amber-500 to-orange-500", action: "updated" as const },
   ];
 
   return (
@@ -667,7 +667,9 @@ export default function DashboardPage() {
                     reminder.status === "overdue" 
                       ? "bg-red-50/50 border-red-100 hover:border-red-200" 
                       : reminder.status === "warning"
-                      ? "bg-yellow-50/50 border-yellow-100 hover:border-yellow-200"
+                      ? "bg-amber-50/50 border-amber-100 hover:border-amber-200"
+                      : reminder.status === "scheduled"
+                      ? "bg-blue-50/50 border-blue-100 hover:border-blue-200"
                       : "bg-white/50 border-slate-200/30 hover:border-blue-200"
                   }`}
                 >
@@ -675,7 +677,9 @@ export default function DashboardPage() {
                     reminder.status === "overdue" 
                       ? "bg-gradient-to-br from-red-500 to-rose-500" 
                       : reminder.status === "warning"
-                      ? "bg-gradient-to-br from-yellow-500 to-amber-500"
+                      ? "bg-gradient-to-br from-amber-500 to-orange-500"
+                      : reminder.status === "scheduled"
+                      ? "bg-gradient-to-br from-blue-500 to-cyan-500"
                       : "bg-gradient-to-br from-teal-500 to-emerald-500"
                   }`}>
                     <reminder.icon className="w-5 h-5 text-white" />
@@ -688,7 +692,9 @@ export default function DashboardPage() {
                     reminder.status === "overdue" 
                       ? "bg-red-500 animate-pulse" 
                       : reminder.status === "warning"
-                      ? "bg-yellow-500"
+                      ? "bg-amber-500"
+                      : reminder.status === "scheduled"
+                      ? "bg-blue-500"
                       : "bg-green-500"
                   }`} />
                 </motion.div>

@@ -9,13 +9,12 @@ import {
   ArrowDownRight, Eye, Share2, Printer,
   ChevronRight, ChevronDown, Bell, Heart,
   Battery, Thermometer, Droplets, Stethoscope,
-  Zap, Brain, Lung, Kidney, Liver,
-  Pill, TestTube, Image, Brain as BrainIcon,
+  Zap, Brain, Pill, TestTube, Image,
   Download as DownloadIcon, Share as ShareIcon,
   FileWarning, FileCheck, FileX, RefreshCw,
   MessageSquare, User, QrCode, Smartphone,
   MapPin, Phone, Mail, ExternalLink,
-  X, MoreVertical // Added missing imports
+  X, MoreVertical
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
