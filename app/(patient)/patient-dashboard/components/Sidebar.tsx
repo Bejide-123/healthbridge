@@ -28,6 +28,12 @@ export default function DashboardSidebar() {
   const [infoSectionOpen, setInfoSectionOpen] = useState(false);
   const { isOpen, closeSidebar } = useSidebar();
 
+  const handleLinkClick = () => {
+    if (window.innerWidth < 1024) {
+      closeSidebar();
+    }
+  };
+
   const sidebarItems: SidebarItem[] = [
     { name: "Dashboard", href: "/patient-dashboard", icon: LayoutDashboard },
     { name: "Appointments", href: "/patient-dashboard/appointments", icon: Calendar, badge: 2 },
@@ -87,7 +93,7 @@ export default function DashboardSidebar() {
         <div className="flex h-full flex-col">
           {/* Sidebar header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-200/50">
-            <Link href="/patient-dashboard" className="flex items-center gap-3" onClick={closeSidebar}>
+            <Link href="/patient-dashboard" className="flex items-center gap-3" onClick={handleLinkClick}>
               <motion.div 
                 className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
@@ -154,7 +160,7 @@ export default function DashboardSidebar() {
                         ? "bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-600 border border-blue-100"
                         : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     }`}
-                    onClick={closeSidebar}
+                    onClick={handleLinkClick}
                   >
                     <div className={`p-2 rounded-lg ${
                       isActive(item.href)
@@ -211,7 +217,7 @@ export default function DashboardSidebar() {
                     <Link
                       href={action.href}
                       className="group relative p-3 rounded-xl bg-white border border-slate-200/50 hover:border-slate-300 hover:shadow-md transition-all text-center block"
-                      onClick={closeSidebar}
+                      onClick={handleLinkClick}
                     >
                       <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center mx-auto mb-2 shadow-lg`}>
                         <action.icon className="w-5 h-5 text-white" />

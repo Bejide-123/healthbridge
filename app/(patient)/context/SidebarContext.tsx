@@ -12,26 +12,27 @@ interface SidebarContextType {
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false); // Default to closed
-  const [isClient, setIsClient] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Start with sidebar open on server and initial client render
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    // This effect runs only on the client after mount
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
+      }
+    };
 
-  useEffect(() => {
-    if (isClient) {
-      const isDesktop = window.innerWidth >= 1024;
-      setIsOpen(isDesktop);
+    // Set the initial state based on screen size
+    handleResize();
 
-      const handleResize = () => {
-        setIsOpen(window.innerWidth >= 1024);
-      };
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
 
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, [isClient]);
+    // Cleanup listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   const toggleSidebar = () => setIsOpen(prev => !prev);
   const closeSidebar = () => setIsOpen(false);
