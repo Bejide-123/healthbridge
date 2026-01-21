@@ -1,8 +1,8 @@
-// components/patients-dashboard/sidebar/DashboardSidebar.tsx
+// app/patient-dashboard/components/Sidebar.tsx
 "use client";
 
 import { useState } from "react";
-import { 
+import {
   LayoutDashboard, Calendar, FileText, Pill,
   CreditCard, Ambulance, MessageSquare, User,
   Bell, HelpCircle, LogOut, Menu, X,
@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSidebar } from "../../context/SidebarContext";
 
 interface SidebarItem {
   name: string;
@@ -23,9 +24,9 @@ interface SidebarItem {
 }
 
 export default function DashboardSidebar() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [infoSectionOpen, setInfoSectionOpen] = useState(false);
   const pathname = usePathname();
+  const [infoSectionOpen, setInfoSectionOpen] = useState(false);
+  const { isOpen, closeSidebar } = useSidebar();
 
   const sidebarItems: SidebarItem[] = [
     { name: "Dashboard", href: "/patient-dashboard", icon: LayoutDashboard },
@@ -51,8 +52,8 @@ export default function DashboardSidebar() {
   ];
 
   const isActive = (href: string) => {
-    if (href === "/patients-dashboard") {
-      return pathname === "/patients-dashboard";
+    if (href === "/patient-dashboard") {
+      return pathname === "/patient-dashboard";
     }
     return pathname.startsWith(href);
   };
@@ -61,12 +62,12 @@ export default function DashboardSidebar() {
     <>
       {/* Mobile sidebar overlay */}
       <AnimatePresence>
-        {sidebarOpen && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSidebarOpen(false)}
+            onClick={closeSidebar}
             className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           />
         )}
@@ -76,17 +77,17 @@ export default function DashboardSidebar() {
       <motion.aside
         initial={false}
         animate={{
-          width: 280,
+          x: isOpen ? 0 : -280,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-slate-200/50 bg-white/80 backdrop-blur-xl lg:static lg:block lg:translate-x-0 transition-transform duration-300 ease-in-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-slate-200/50 bg-white/80 backdrop-blur-xl lg:static lg:block lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
         } lg:transform-none`}
       >
         <div className="flex h-full flex-col">
           {/* Sidebar header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-200/50">
-            <Link href="/patients-dashboard" className="flex items-center gap-3">
+            <Link href="/patient-dashboard" className="flex items-center gap-3" onClick={closeSidebar}>
               <motion.div 
                 className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center"
                 whileHover={{ rotate: 360 }}
@@ -100,7 +101,7 @@ export default function DashboardSidebar() {
               </div>
             </Link>
             <button
-              onClick={() => setSidebarOpen(false)}
+              onClick={closeSidebar}
               className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
             >
               <X className="w-5 h-5 text-slate-600" />
@@ -153,7 +154,7 @@ export default function DashboardSidebar() {
                         ? "bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-600 border border-blue-100"
                         : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     }`}
-                    onClick={() => setSidebarOpen(false)}
+                    onClick={closeSidebar}
                   >
                     <div className={`p-2 rounded-lg ${
                       isActive(item.href)
@@ -210,7 +211,7 @@ export default function DashboardSidebar() {
                     <Link
                       href={action.href}
                       className="group relative p-3 rounded-xl bg-white border border-slate-200/50 hover:border-slate-300 hover:shadow-md transition-all text-center block"
-                      onClick={() => setSidebarOpen(false)}
+                      onClick={closeSidebar}
                     >
                       <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center mx-auto mb-2 shadow-lg`}>
                         <action.icon className="w-5 h-5 text-white" />

@@ -50,47 +50,60 @@ function AppointmentCard({
       className="bg-white rounded-2xl border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
     >
       {/* Appointment header */}
-      <div className="p-6 border-b border-slate-100">
-        <div className="flex items-start justify-between">
-          <div className="flex items-start gap-4">
-            <div className="relative">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-white" />
+      <div className="p-4 md:p-6 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+          <div className="flex items-start gap-3 md:gap-4 w-full">
+            <div className="relative flex-shrink-0">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <Calendar className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               {appointment.status === "confirmed" && (
                 <motion.div 
-                  className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"
+                  className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-white"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
               )}
             </div>
             
-            <div>
-              <div className="flex items-center gap-3">
-                <h3 className="text-lg font-bold text-slate-900">{appointment.time}</h3>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 ${statusColors[appointment.status as keyof typeof statusColors]}`}>
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                <h3 className="text-base md:text-lg font-bold text-slate-900 truncate">{appointment.time}</h3>
+                <span className={`px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium flex items-center gap-1.5 w-fit ${statusColors[appointment.status as keyof typeof statusColors]}`}>
                   <StatusIcon className="w-3 h-3" />
                   {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                 </span>
               </div>
               
-              <div className="flex items-center gap-4 mt-2">
+              {/* Doctor info - responsive layout */}
+              <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                 <div className="flex items-center gap-2 text-slate-700">
-                  <User className="w-4 h-4 text-slate-400" />
-                  <span className="font-medium">{appointment.doctor}</span>
+                  <User className="w-3 h-3 md:w-4 md:h-4 text-slate-400 flex-shrink-0" />
+                  <span className="font-medium text-sm md:text-base truncate">{appointment.doctor}</span>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
+                <div className="hidden sm:flex items-center gap-2 text-slate-600">
                   <Stethoscope className="w-4 h-4 text-slate-400" />
-                  <span>{appointment.department}</span>
+                  <span className="text-sm">{appointment.department}</span>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
+                <div className="hidden md:flex items-center gap-2 text-slate-600">
                   <MapPin className="w-4 h-4 text-slate-400" />
                   <span>{appointment.location}</span>
                 </div>
               </div>
+
+              {/* Mobile only - department and location */}
+              <div className="sm:hidden mt-2 space-y-2">
+                <div className="flex items-center gap-2 text-slate-600">
+                  <Stethoscope className="w-3 h-3 text-slate-400" />
+                  <span className="text-sm">{appointment.department}</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-600">
+                  <MapPin className="w-3 h-3 text-slate-400" />
+                  <span className="text-sm">{appointment.location}</span>
+                </div>
+              </div>
               
-              <div className="flex items-center gap-4 mt-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-3">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star 
@@ -98,52 +111,56 @@ function AppointmentCard({
                       className={`w-3 h-3 ${i < appointment.rating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
                     />
                   ))}
-                  <span className="text-sm text-slate-500 ml-1">({appointment.rating}.0)</span>
+                  <span className="text-xs md:text-sm text-slate-500 ml-1">({appointment.rating}.0)</span>
                 </div>
-                <div className="text-sm text-slate-500">
+                <div className="text-xs md:text-sm text-slate-500">
                   {appointment.type} • {appointment.duration}
                 </div>
               </div>
             </div>
           </div>
           
-          <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+          <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors self-start sm:self-center">
             <MoreVertical className="w-5 h-5 text-slate-400" />
           </button>
         </div>
       </div>
       
-      {/* Appointment actions */}
-      <div className="p-4 bg-slate-50/50">
-        <div className="flex items-center gap-3">
-          {appointment.status === "confirmed" && (
+      {/* Appointment actions - Responsive layout */}
+      <div className="p-3 md:p-4 bg-slate-50/50">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex-1 flex flex-col sm:flex-row gap-3">
+            {appointment.status === "confirmed" && (
+              <motion.button
+                onClick={() => router.push('/patient-dashboard/appointments/queue')}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium hover:shadow-lg transition-all flex items-center gap-2 justify-center text-sm sm:text-base"
+              >
+                <Activity className="w-4 h-4" />
+                <span className="truncate">Check Live Queue</span>
+              </motion.button>
+            )}
+            
             <motion.button
-              onClick={() => router.push('/patient-dashboard/appointments/queue')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium hover:shadow-lg transition-all flex items-center gap-2 flex-1 justify-center"
+              onClick={onViewDetails}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`px-4 py-2.5 rounded-lg border border-slate-300 font-medium hover:bg-white transition-all flex items-center gap-2 justify-center text-sm sm:text-base ${
+                appointment.status !== "confirmed" ? "w-full" : "flex-1"
+              }`}
             >
-              <Activity className="w-4 h-4" />
-              Check Live Queue
+              <FileText className="w-4 h-4" />
+              <span className="truncate">View Details</span>
             </motion.button>
-          )}
-          
-          <motion.button
-            onClick={onViewDetails}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-4 py-2.5 rounded-lg border border-slate-300 font-medium hover:bg-white transition-all flex items-center gap-2 flex-1 justify-center ${appointment.status !== "confirmed" ? "flex-2" : ""}`}
-          >
-            <FileText className="w-4 h-4" />
-            View Details
-          </motion.button>
+          </div>
           
           {appointment.status === "confirmed" && (
-            <div className="flex gap-2">
-              <button className="p-2.5 rounded-lg border border-slate-300 hover:bg-white transition-colors">
+            <div className="flex sm:flex-col md:flex-row gap-2 justify-center">
+              <button className="p-2.5 rounded-lg border border-slate-300 hover:bg-white transition-colors flex items-center justify-center">
                 <MessageSquare className="w-4 h-4 text-slate-600" />
               </button>
-              <button className="p-2.5 rounded-lg border border-slate-300 hover:bg-white transition-colors">
+              <button className="p-2.5 rounded-lg border border-slate-300 hover:bg-white transition-colors flex items-center justify-center">
                 <Video className="w-4 h-4 text-slate-600" />
               </button>
             </div>
@@ -154,7 +171,7 @@ function AppointmentCard({
   );
 }
 
-// Booking Modal Component
+// Booking Modal Component (keep as is, it's already responsive)
 function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1);
   const [selectedDoctor, setSelectedDoctor] = useState<number | null>(null);
@@ -217,11 +234,11 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           >
             <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl bg-white shadow-2xl">
               {/* Modal header */}
-              <div className="sticky top-0 z-10 bg-white border-b border-slate-200 p-6">
+              <div className="sticky top-0 z-10 bg-white border-b border-slate-200 p-4 md:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-900">Book Appointment</h2>
-                    <p className="text-slate-600 mt-1">Schedule your consultation in a few steps</p>
+                    <h2 className="text-xl md:text-2xl font-bold text-slate-900">Book Appointment</h2>
+                    <p className="text-slate-600 mt-1 text-sm md:text-base">Schedule your consultation in a few steps</p>
                   </div>
                   <button
                     onClick={onClose}
@@ -231,34 +248,36 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   </button>
                 </div>
                 
-                {/* Progress steps */}
-                <div className="flex items-center justify-between mt-6">
-                  {[1, 2, 3, 4, 5].map((stepNum) => (
-                    <div key={stepNum} className="flex items-center flex-1">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-medium ${
-                        step === stepNum 
-                          ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white" 
-                          : step > stepNum 
-                          ? "bg-green-500 text-white"
-                          : "bg-slate-100 text-slate-600"
-                      }`}>
-                        {step > stepNum ? <CheckCircle className="w-4 h-4" /> : stepNum}
+                {/* Progress steps - responsive */}
+                <div className="flex items-center justify-between mt-4 md:mt-6">
+                  <div className="flex items-center flex-1 overflow-x-auto pb-2">
+                    {[1, 2, 3, 4, 5].map((stepNum) => (
+                      <div key={stepNum} className="flex items-center flex-shrink-0">
+                        <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center font-medium text-xs md:text-sm ${
+                          step === stepNum 
+                            ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white" 
+                            : step > stepNum 
+                            ? "bg-green-500 text-white"
+                            : "bg-slate-100 text-slate-600"
+                        }`}>
+                          {step > stepNum ? <CheckCircle className="w-3 h-3 md:w-4 md:h-4" /> : stepNum}
+                        </div>
+                        {stepNum < 5 && (
+                          <div className={`w-6 md:w-8 h-1 mx-1 md:mx-2 ${
+                            step > stepNum ? "bg-green-500" : "bg-slate-200"
+                          }`} />
+                        )}
                       </div>
-                      {stepNum < 5 && (
-                        <div className={`flex-1 h-1 mx-2 ${
-                          step > stepNum ? "bg-green-500" : "bg-slate-200"
-                        }`} />
-                      )}
-                    </div>
-                  ))}
-                  <div className="ml-4 text-sm font-medium text-slate-600">
+                    ))}
+                  </div>
+                  <div className="ml-2 md:ml-4 text-sm font-medium text-slate-600 whitespace-nowrap">
                     Step {step} of 5
                   </div>
                 </div>
               </div>
               
               {/* Modal content */}
-              <div className="overflow-y-auto p-6" style={{ maxHeight: 'calc(90vh - 160px)' }}>
+              <div className="overflow-y-auto p-4 md:p-6" style={{ maxHeight: 'calc(90vh - 160px)' }}>
                 {/* Step 1: Select Doctor */}
                 {step === 1 && (
                   <motion.div
@@ -272,40 +291,40 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                         <input
                           type="search"
                           placeholder="Search doctors by name or specialty..."
-                          className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                          className="w-full pl-10 md:pl-12 pr-4 py-2 md:py-3 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm md:text-base"
                         />
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-slate-400" />
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         {doctors.map((doctor) => (
                           <motion.button
                             key={doctor.id}
                             onClick={() => setSelectedDoctor(doctor.id)}
-                            whileHover={{ y: -5 }}
-                            className={`p-4 rounded-xl border-2 transition-all text-left ${
+                            whileHover={{ y: -2 }}
+                            className={`p-3 md:p-4 rounded-xl border-2 transition-all text-left ${
                               selectedDoctor === doctor.id
                                 ? "border-blue-500 bg-blue-50/50"
                                 : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                             }`}
                           >
-                            <div className="flex items-start gap-4">
-                              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                            <div className="flex items-start gap-3 md:gap-4">
+                              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm md:text-base">
                                 {doctor.image}
                               </div>
-                              <div className="flex-1">
-                                <div className="font-bold text-slate-900">{doctor.name}</div>
-                                <div className="text-sm text-slate-600 mt-1">{doctor.department}</div>
-                                <div className="flex items-center gap-4 mt-2">
+                              <div className="flex-1 min-w-0">
+                                <div className="font-bold text-slate-900 text-sm md:text-base truncate">{doctor.name}</div>
+                                <div className="text-xs md:text-sm text-slate-600 mt-1 truncate">{doctor.department}</div>
+                                <div className="flex items-center gap-2 md:gap-4 mt-2">
                                   <div className="flex items-center gap-1">
-                                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                    <span className="text-sm font-medium">{doctor.rating}</span>
+                                    <Star className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400" />
+                                    <span className="text-xs md:text-sm font-medium">{doctor.rating}</span>
                                   </div>
-                                  <div className="text-sm text-slate-500">{doctor.experience} exp</div>
+                                  <div className="text-xs md:text-sm text-slate-500">{doctor.experience} exp</div>
                                 </div>
                               </div>
                             </div>
-                            <div className={`mt-3 px-3 py-1.5 rounded-full text-xs font-medium ${
+                            <div className={`mt-2 md:mt-3 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium ${
                               doctor.availability === "Today"
                                 ? "bg-green-100 text-green-700"
                                 : "bg-blue-100 text-blue-700"
@@ -331,12 +350,12 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                       
                       {/* Date selection */}
                       <div className="mb-6">
-                        <div className="flex items-center gap-4 overflow-x-auto pb-4">
+                        <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-4">
                           {["Today", "Tomorrow", "Nov 28", "Nov 29", "Nov 30", "Dec 1", "Dec 2"].map((date, index) => (
                             <button
                               key={date}
                               onClick={() => setSelectedDate(date)}
-                              className={`px-4 py-3 rounded-xl whitespace-nowrap ${
+                              className={`px-3 py-2 md:px-4 md:py-3 rounded-xl whitespace-nowrap text-sm md:text-base ${
                                 selectedDate === date
                                   ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white"
                                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -354,12 +373,12 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                       {/* Time slots */}
                       <div>
                         <div className="text-sm font-medium text-slate-600 mb-3">Available Time Slots</div>
-                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 md:gap-3">
                           {timeSlots.map((time) => (
                             <button
                               key={time}
                               onClick={() => setSelectedTime(time)}
-                              className={`p-3 rounded-lg border transition-all ${
+                              className={`p-2 md:p-3 rounded-lg border transition-all text-sm md:text-base ${
                                 selectedTime === time
                                   ? "border-blue-500 bg-blue-50 text-blue-700"
                                   : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
@@ -383,23 +402,23 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   >
                     <div>
                       <h3 className="text-lg font-bold text-slate-900 mb-4">Appointment Type</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                         {appointmentTypes.map((type) => {
                           const Icon = type.icon;
                           return (
                             <button
                               key={type.id}
                               onClick={() => setAppointmentType(type.id)}
-                              className={`p-4 rounded-xl border-2 transition-all ${
+                              className={`p-3 md:p-4 rounded-xl border-2 transition-all ${
                                 appointmentType === type.id
                                   ? `border-blue-500 bg-gradient-to-br ${type.color} bg-opacity-10`
                                   : "border-slate-200 hover:border-slate-300"
                               }`}
                             >
-                              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${type.color} flex items-center justify-center mb-3`}>
-                                <Icon className="w-6 h-6 text-white" />
+                              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${type.color} flex items-center justify-center mb-2 md:mb-3 mx-auto`}>
+                                <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                               </div>
-                              <div className="font-bold text-slate-900">{type.label}</div>
+                              <div className="font-bold text-slate-900 text-sm md:text-base text-center">{type.label}</div>
                             </button>
                           );
                         })}
@@ -417,7 +436,7 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   >
                     <div>
                       <h3 className="text-lg font-bold text-slate-900 mb-4">Reason for Appointment</h3>
-                      <p className="text-slate-600 mb-4">
+                      <p className="text-slate-600 mb-4 text-sm md:text-base">
                         Please describe your symptoms or reason for visit. This helps your doctor prepare for your consultation.
                       </p>
                       
@@ -426,15 +445,15 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                           value={reason}
                           onChange={(e) => setReason(e.target.value)}
                           placeholder="Example: I've been experiencing headaches for the past 3 days, accompanied by dizziness. I have no known allergies. I'm taking painkillers but they're not helping..."
-                          className="w-full h-48 p-4 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none resize-none"
+                          className="w-full h-32 md:h-48 p-3 md:p-4 rounded-xl bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none resize-none text-sm md:text-base"
                         />
                         
-                        <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-4">
-                          <div className="flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                        <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-3 md:p-4">
+                          <div className="flex items-start gap-2 md:gap-3">
+                            <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                             <div>
-                              <div className="font-medium text-blue-900 mb-1">Helpful Information to Include:</div>
-                              <ul className="text-sm text-blue-700 space-y-1">
+                              <div className="font-medium text-blue-900 mb-1 text-sm md:text-base">Helpful Information to Include:</div>
+                              <ul className="text-xs md:text-sm text-blue-700 space-y-1">
                                 <li>• Duration and frequency of symptoms</li>
                                 <li>• Any medications you're currently taking</li>
                                 <li>• Known allergies or medical conditions</li>
@@ -459,38 +478,38 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     <div>
                       <h3 className="text-lg font-bold text-slate-900 mb-4">Review & Confirm</h3>
                       
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 md:p-6 border border-blue-100">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                           <div>
                             <div className="text-sm font-medium text-slate-600 mb-3">Appointment Details</div>
-                            <div className="space-y-4">
+                            <div className="space-y-3 md:space-y-4">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                                  <User className="w-5 h-5 text-white" />
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                                  <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
                                 </div>
-                                <div>
-                                  <div className="font-bold text-slate-900">Dr. Adebola Johnson</div>
-                                  <div className="text-sm text-slate-600">Cardiology</div>
+                                <div className="min-w-0">
+                                  <div className="font-bold text-slate-900 text-sm md:text-base truncate">Dr. Adebola Johnson</div>
+                                  <div className="text-xs md:text-sm text-slate-600">Cardiology</div>
                                 </div>
                               </div>
                               
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center">
-                                  <Calendar className="w-5 h-5 text-white" />
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
+                                  <Calendar className="w-4 h-4 md:w-5 md:h-5 text-white" />
                                 </div>
-                                <div>
-                                  <div className="font-bold text-slate-900">Today, 2:30 PM</div>
-                                  <div className="text-sm text-slate-600">Estimated duration: 30 minutes</div>
+                                <div className="min-w-0">
+                                  <div className="font-bold text-slate-900 text-sm md:text-base">Today, 2:30 PM</div>
+                                  <div className="text-xs md:text-sm text-slate-600">Estimated duration: 30 minutes</div>
                                 </div>
                               </div>
                               
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center">
-                                  <Activity className="w-5 h-5 text-white" />
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center flex-shrink-0">
+                                  <Activity className="w-4 h-4 md:w-5 md:h-5 text-white" />
                                 </div>
-                                <div>
-                                  <div className="font-bold text-slate-900">Consultation</div>
-                                  <div className="text-sm text-slate-600">Initial visit</div>
+                                <div className="min-w-0">
+                                  <div className="font-bold text-slate-900 text-sm md:text-base">Consultation</div>
+                                  <div className="text-xs md:text-sm text-slate-600">Initial visit</div>
                                 </div>
                               </div>
                             </div>
@@ -498,24 +517,24 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                           
                           <div>
                             <div className="text-sm font-medium text-slate-600 mb-3">Reason for Visit</div>
-                            <div className="bg-white rounded-xl p-4 border border-slate-200">
-                              <p className="text-slate-700">
+                            <div className="bg-white rounded-xl p-3 md:p-4 border border-slate-200">
+                              <p className="text-slate-700 text-sm md:text-base">
                                 {reason || "No reason provided. Please add details to help your doctor prepare."}
                               </p>
                             </div>
                             
-                            <div className="mt-6 pt-6 border-t border-slate-200">
+                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-slate-200">
                               <div className="flex items-center justify-between mb-2">
-                                <div className="text-slate-600">Consultation Fee</div>
+                                <div className="text-slate-600 text-sm md:text-base">Consultation Fee</div>
                                 <div className="font-bold text-slate-900">₦5,000</div>
                               </div>
                               <div className="flex items-center justify-between">
-                                <div className="text-slate-600">Service Charge</div>
+                                <div className="text-slate-600 text-sm md:text-base">Service Charge</div>
                                 <div className="font-bold text-slate-900">₦500</div>
                               </div>
                               <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-300">
-                                <div className="font-bold text-slate-900">Total Amount</div>
-                                <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
+                                <div className="font-bold text-slate-900 text-sm md:text-base">Total Amount</div>
+                                <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
                                   ₦5,500
                                 </div>
                               </div>
@@ -529,11 +548,11 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               </div>
               
               {/* Modal footer */}
-              <div className="sticky bottom-0 bg-white border-t border-slate-200 p-6">
-                <div className="flex items-center justify-between">
+              <div className="sticky bottom-0 bg-white border-t border-slate-200 p-4 md:p-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
                   <button
                     onClick={step === 1 ? onClose : handleBack}
-                    className="px-6 py-3 rounded-lg border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-all flex items-center gap-2"
+                    className="px-4 py-2 md:px-6 md:py-3 rounded-lg border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     {step === 1 ? "Cancel" : "Back"}
@@ -542,16 +561,16 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   <button
                     onClick={step === 5 ? handleSubmit : handleNext}
                     disabled={step === 1 && !selectedDoctor}
-                    className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-6 py-2 md:px-8 md:py-3 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 w-full sm:w-auto justify-center"
                   >
                     {step === 5 ? (
                       <>
-                        <CheckCircle className="w-5 h-5" />
-                        Confirm Booking - ₦5,500
+                        <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
+                        <span>Confirm Booking - ₦5,500</span>
                       </>
                     ) : (
                       <>
-                        Next Step
+                        <span>Next Step</span>
                         <ChevronRight className="w-4 h-4" />
                       </>
                     )}
@@ -642,67 +661,67 @@ export default function AppointmentsPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8 px-4 md:px-0">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Appointments</h1>
-          <p className="text-slate-600 mt-2">Manage your medical appointments and consultations</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Appointments</h1>
+          <p className="text-slate-600 mt-1 md:mt-2 text-sm md:text-base">Manage your medical appointments and consultations</p>
         </div>
         
         <motion.button
           onClick={() => setShowBookingModal(true)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all flex items-center gap-2"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="px-4 py-2.5 md:px-6 md:py-3 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all flex items-center gap-2 text-sm md:text-base w-full sm:w-auto justify-center"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4 md:w-5 md:h-5" />
           Book New Appointment
         </motion.button>
       </div>
 
       {/* Stats & Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 md:p-6 border border-blue-100">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-2xl font-bold text-slate-900">{appointments.upcoming.length}</div>
-              <div className="text-sm text-slate-600">Upcoming</div>
+              <div className="text-xl md:text-2xl font-bold text-slate-900">{appointments.upcoming.length}</div>
+              <div className="text-xs md:text-sm text-slate-600">Upcoming</div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-              <Calendar className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <Calendar className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 md:p-6 border border-green-100">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-2xl font-bold text-slate-900">{appointments.past.length}</div>
-              <div className="text-sm text-slate-600">Completed</div>
+              <div className="text-xl md:text-2xl font-bold text-slate-900">{appointments.past.length}</div>
+              <div className="text-xs md:text-sm text-slate-600">Completed</div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <CheckCircle className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
         
-        <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-6 border border-red-100">
+        <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-4 md:p-6 border border-red-100">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-2xl font-bold text-slate-900">{appointments.cancelled.length}</div>
-              <div className="text-sm text-slate-600">Cancelled</div>
+              <div className="text-xl md:text-2xl font-bold text-slate-900">{appointments.cancelled.length}</div>
+              <div className="text-xs md:text-sm text-slate-600">Cancelled</div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center">
-              <X className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center">
+              <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="border-b border-slate-200">
-        <div className="flex space-x-8">
+      {/* Tabs - responsive */}
+      <div className="border-b border-slate-200 overflow-x-auto">
+        <div className="flex space-x-4 md:space-x-8 min-w-max">
           {[
             { id: "upcoming", label: "Upcoming", count: appointments.upcoming.length },
             { id: "past", label: "Past", count: appointments.past.length },
@@ -711,7 +730,7 @@ export default function AppointmentsPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 px-1 font-medium text-sm border-b-2 transition-colors relative ${
+              className={`pb-3 px-1 font-medium text-sm border-b-2 transition-colors relative whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-blue-500 text-blue-600"
                   : "border-transparent text-slate-600 hover:text-slate-900"
@@ -733,7 +752,7 @@ export default function AppointmentsPage() {
       </div>
 
       {/* Appointments List */}
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {appointments[activeTab as keyof typeof appointments].map((appointment) => (
           <AppointmentCard
             key={appointment.id}
@@ -744,15 +763,15 @@ export default function AppointmentsPage() {
         ))}
         
         {appointments[activeTab as keyof typeof appointments].length === 0 && (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-8 h-8 text-slate-400" />
+          <div className="text-center py-8 md:py-12">
+            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <Calendar className="w-6 h-6 md:w-8 md:h-8 text-slate-400" />
             </div>
-            <h3 className="text-lg font-medium text-slate-900 mb-2">No appointments found</h3>
-            <p className="text-slate-600 mb-6">You don't have any {activeTab} appointments</p>
+            <h3 className="text-base md:text-lg font-medium text-slate-900 mb-1 md:mb-2">No appointments found</h3>
+            <p className="text-slate-600 mb-4 md:mb-6 text-sm md:text-base">You don't have any {activeTab} appointments</p>
             <button
               onClick={() => setShowBookingModal(true)}
-              className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium hover:from-blue-600 hover:to-cyan-600 hover:shadow-lg transition-all"
+              className="px-4 py-2.5 md:px-6 md:py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium hover:from-blue-600 hover:to-cyan-600 hover:shadow-lg transition-all text-sm md:text-base"
             >
               Book Your First Appointment
             </button>

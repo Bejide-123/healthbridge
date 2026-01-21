@@ -1,3 +1,4 @@
+// app/patient-dashboard/components/Header.tsx
 "use client";
 
 import { useState } from "react";
@@ -10,6 +11,7 @@ import {
   X, Home, ChevronDown, Plus
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSidebar } from "../../context/SidebarContext";
 
 export default function DashboardHeader() {
   const pathname = usePathname();
@@ -17,6 +19,8 @@ export default function DashboardHeader() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  
+  const { toggleSidebar, closeSidebar } = useSidebar();
 
   const getPageTitle = () => {
     const path = pathname.replace('/patient-dashboard', '');
@@ -84,46 +88,6 @@ export default function DashboardHeader() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Quick Actions Bar */}
-      <AnimatePresence>
-        {showMobileMenu && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-20 left-4 right-4 z-40 bg-white rounded-2xl shadow-2xl border border-slate-200 lg:hidden"
-          >
-            <div className="p-4">
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {quickActions.map((action, index) => (
-                  <Link
-                    key={index}
-                    href={action.href}
-                    onClick={() => setShowMobileMenu(false)}
-                    className="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-slate-50 transition-colors"
-                  >
-                    <div className={`w-10 h-10 rounded-full ${action.color} flex items-center justify-center mb-2`}>
-                      <action.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-xs font-medium text-slate-700 text-center">{action.label}</span>
-                  </Link>
-                ))}
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                <button className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
-                  <Moon className="w-4 h-4" />
-                  <span className="text-sm">Theme</span>
-                </button>
-                <button className="flex items-center gap-2 text-slate-600 hover:text-slate-900">
-                  <Settings className="w-4 h-4" />
-                  <span className="text-sm">Settings</span>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Header */}
       <motion.header 
         initial={{ y: -20, opacity: 0 }}
@@ -133,16 +97,12 @@ export default function DashboardHeader() {
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           {/* Left Section */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle - Now toggles sidebar */}
             <button
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              onClick={toggleSidebar}
               className="p-2 rounded-lg hover:bg-slate-100 lg:hidden transition-colors"
             >
-              {showMobileMenu ? (
-                <X className="w-5 h-5 text-slate-600" />
-              ) : (
-                <Menu className="w-5 h-5 text-slate-600" />
-              )}
+              <Menu className="w-5 h-5 text-slate-600" />
             </button>
             
             {/* Logo for mobile */}
@@ -366,23 +326,7 @@ export default function DashboardHeader() {
           </div>
         </div>
 
-        {/* Mobile Quick Actions */}
-        <div className="lg:hidden border-t border-slate-200/50 bg-white/50">
-          <div className="flex items-center justify-around px-4 py-2">
-            {quickActions.slice(0, 4).map((action, index) => (
-              <Link
-                key={index}
-                href={action.href}
-                className="flex flex-col items-center justify-center p-2 rounded-lg hover:bg-slate-50 transition-colors"
-              >
-                <div className={`w-8 h-8 rounded-full ${action.color} flex items-center justify-center mb-1`}>
-                  <action.icon className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-xs font-medium text-slate-700">{action.label}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+        {/* Mobile Quick Actions - Removed since they're in the sidebar */}
       </motion.header>
     </>
   );
