@@ -479,7 +479,7 @@ export default function DashboardPage() {
       title: "Book Appointment", 
       description: "Schedule a consultation with any doctor", 
       icon: Calendar, 
-      href: "/dashboard/appointments/book",
+      href: "/patient-dashboard/appointments",
       color: "blue" as const,
       badge: "Fast"
     },
@@ -487,22 +487,22 @@ export default function DashboardPage() {
       title: "Medical Records", 
       description: "Access your complete health history", 
       icon: FileText, 
-      href: "/dashboard/medical-records",
+      href: "/patient-dashboard/medical-records",
       color: "teal" as const
     },
     { 
-      title: "AI Assistant", 
+      title: "Lab Results", 
       description: "Get 24/7 health guidance", 
       icon: Brain, 
-      href: "/dashboard/ai-assistant",
+      href: "/patient-dashboard/lab-results",
       color: "purple" as const,
-      badge: "24/7"
+      badge: "New"
     },
     { 
       title: "Emergency", 
       description: "Request ambulance instantly", 
       icon: Ambulance, 
-      href: "/dashboard/emergency",
+      href: "/patient-dashboard/emergency",
       color: "pink" as const,
       badge: "URGENT"
     },
@@ -589,7 +589,7 @@ export default function DashboardPage() {
             <p className="text-slate-600 text-sm mt-1">Most important features for fast access</p>
           </div>
           <Link 
-            href="/dashboard/quick-actions" 
+            href="/patient-dashboard/appointments" 
             className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group"
           >
             View all
@@ -619,7 +619,7 @@ export default function DashboardPage() {
                 <p className="text-slate-600 text-sm mt-1">Your scheduled consultations and check-ups</p>
               </div>
               <Link 
-                href="/dashboard/appointments" 
+                href="/patient-dashboard/appointments" 
                 className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group"
               >
                 View calendar
