@@ -11,7 +11,8 @@ import {
   Brain, Ambulance, MessageSquare, Stethoscope,
   Thermometer, Droplets, TrendingDown,
   Battery, UserCheck,
-  RefreshCw, MoreHorizontal
+  RefreshCw, MoreHorizontal,
+  ChevronRight
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -63,20 +64,20 @@ function StatCard({
       {/* Glow effect */}
       <div className={`absolute -inset-0.5 bg-gradient-to-br ${colors[color]} rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
       
-      <div className="relative p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div className="relative p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
         {/* Animated background pattern */}
         <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-xl" />
         
         <div className="flex items-start justify-between mb-4">
           <motion.div 
-            className={`p-3 rounded-xl bg-gradient-to-br ${colors[color]} shadow-lg`}
+            className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br ${colors[color]} shadow-lg`}
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
           >
-            <Icon className="w-6 h-6 text-white" />
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </motion.div>
           <motion.div 
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
+            className={`flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
               trend === "up" ? 'bg-green-100 text-green-700' : 
               trend === "down" ? 'bg-red-100 text-red-700' : 
               'bg-blue-100 text-blue-700'
@@ -84,12 +85,12 @@ function StatCard({
             whileHover={{ scale: 1.1 }}
           >
             <TrendIcon className={`w-3 h-3 ${trend === "down" ? "rotate-180" : ""}`} />
-            <span>{change}</span>
+            <span className="hidden sm:inline">{change}</span>
           </motion.div>
         </div>
         
         <motion.div 
-          className="text-2xl font-bold text-slate-900 mb-1"
+          className="text-xl sm:text-2xl font-bold text-slate-900 mb-1"
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
           transition={{ delay: delay + 0.1 }}
@@ -97,7 +98,7 @@ function StatCard({
           {value}
         </motion.div>
         
-        <div className="text-sm text-slate-600 flex items-center justify-between">
+        <div className="text-xs sm:text-sm text-slate-600 flex items-center justify-between">
           <span>{title}</span>
           <motion.div 
             className="w-2 h-2 rounded-full bg-green-500 opacity-0 group-hover:opacity-100"
@@ -108,19 +109,6 @@ function StatCard({
         
         {/* Animated progress bar */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-        
-        {/* Hover particles */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={`absolute w-1 h-1 bg-gradient-to-br ${colors[color]} rounded-full`}
-              initial={{ y: 0, x: Math.random() * 100 }}
-              animate={{ y: -20, opacity: 0 }}
-              transition={{ duration: 1, delay: i * 0.2, repeat: Infinity }}
-            />
-          ))}
-        </div>
       </div>
     </motion.div>
   );
@@ -165,7 +153,7 @@ function QuickActionCard({
       }}
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
-      className="relative group cursor-pointer perspective-1000"
+      className="relative group cursor-pointer"
     >
       {/* Floating badge */}
       {badge && (
@@ -180,35 +168,35 @@ function QuickActionCard({
       )}
       
       <Link href={href}>
-        <div className="relative p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+        <div className="relative p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
           {/* Animated gradient background */}
           <div className={`absolute inset-0 bg-gradient-to-br ${colors[color]} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
           
           <div className="relative flex items-start justify-between mb-4">
             <motion.div 
-              className={`p-3 rounded-xl bg-gradient-to-br ${colors[color]} shadow-lg relative overflow-hidden`}
+              className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br ${colors[color]} shadow-lg relative overflow-hidden`}
               animate={{ 
                 scale: hover ? 1.1 : 1,
                 rotate: hover ? 5 : 0
               }}
               transition={{ type: "spring" }}
             >
-              <Icon className="w-6 h-6 text-white relative z-10" />
+              <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white relative z-10" />
               <div className="absolute inset-0 bg-white/20 blur-sm" />
             </motion.div>
             <motion.div
               animate={{ x: hover ? 5 : 0 }}
               transition={{ type: "spring" }}
             >
-              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
             </motion.div>
           </div>
           
-          <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-teal-500 transition-all duration-300">
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-teal-500 transition-all duration-300">
             {title}
           </h3>
           
-          <p className="text-sm text-slate-600 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-2">
             {description}
           </p>
           
@@ -232,7 +220,7 @@ function QuickActionCard({
   );
 }
 
-// Enhanced Appointment card with timeline
+// Enhanced Appointment card with timeline - RESPONSIVE
 function AppointmentCard({ 
   time, 
   doctor, 
@@ -270,18 +258,18 @@ function AppointmentCard({
       onHoverEnd={() => setIsHovered(false)}
       className="relative group"
     >
-      <div className="flex items-center justify-between p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-slate-200/30 hover:border-blue-200 hover:bg-gradient-to-r hover:from-blue-50/30 hover:to-cyan-50/30 transition-all duration-300">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-slate-200/30 hover:border-blue-200 hover:bg-gradient-to-r hover:from-blue-50/30 hover:to-cyan-50/30 transition-all duration-300 gap-3 sm:gap-4">
         {/* Timeline indicator */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-teal-400 rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity" />
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4 w-full">
           <motion.div 
-            className="relative"
+            className="relative flex-shrink-0"
             animate={{ rotate: isHovered ? 360 : 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
-              <Calendar className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+              <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <motion.div 
               className="absolute -inset-1 border-2 border-blue-400 rounded-xl"
@@ -294,34 +282,38 @@ function AppointmentCard({
             />
           </motion.div>
           
-          <div className="flex-1">
-            <div className="font-medium text-slate-900 flex items-center gap-2">
-              {time}
-              <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+              <div className="font-medium text-slate-900 text-sm sm:text-base truncate">
+                {time}
+              </div>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 w-fit">
                 {type}
               </span>
             </div>
-            <div className="text-sm text-slate-600 font-medium">{doctor}</div>
-            <div className="text-xs text-slate-500 flex items-center gap-2">
-              <Stethoscope className="w-3 h-3" />
-              {department}
-              <span className="text-slate-400">•</span>
-              <span>{location}</span>
+            <div className="text-sm text-slate-600 font-medium truncate">{doctor}</div>
+            <div className="text-xs text-slate-500 flex flex-wrap items-center gap-1 sm:gap-2 mt-1">
+              <div className="flex items-center gap-1">
+                <Stethoscope className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">{department}</span>
+              </div>
+              <span className="hidden sm:inline text-slate-400">•</span>
+              <span className="truncate">{location}</span>
             </div>
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
           <motion.div 
-            className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${statusConfig[status].color}`}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${statusConfig[status].color} min-w-fit`}
             whileHover={{ scale: 1.05 }}
           >
-            <StatusIcon className="w-3 h-3" />
-            <span className="capitalize">{status}</span>
+            <StatusIcon className="w-3 h-3 flex-shrink-0" />
+            <span className="capitalize truncate">{status}</span>
           </motion.div>
           
           <motion.button 
-            className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors opacity-0 group-hover:opacity-100"
+            className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors opacity-0 group-hover:opacity-100 flex-shrink-0"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -379,9 +371,9 @@ function HealthMetricsChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3 }}
-      className="p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
+      className="p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
     >
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
         <h3 className="text-lg font-bold text-slate-900">Health Metrics</h3>
         <div className="flex items-center gap-2 text-sm text-slate-500">
           <Clock className="w-4 h-4" />
@@ -390,7 +382,7 @@ function HealthMetricsChart() {
       </div>
 
       {/* Metric selector */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         {Object.entries(metrics).map(([key, metric]) => {
           const MetricIcon = metric.icon;
           const isActive = activeMetric === key;
@@ -398,7 +390,7 @@ function HealthMetricsChart() {
             <motion.button
               key={key}
               onClick={() => setActiveMetric(key)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0 sm:flex-none ${
                 isActive
                   ? "bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-600 border border-blue-100"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
@@ -409,7 +401,7 @@ function HealthMetricsChart() {
               <div className={`p-1.5 rounded-lg bg-gradient-to-br ${metric.color} ${isActive ? '' : 'opacity-70'}`}>
                 <MetricIcon className="w-4 h-4 text-white" />
               </div>
-              <span className="text-sm font-medium">{metric.label}</span>
+              <span className="text-sm font-medium truncate">{metric.label}</span>
             </motion.button>
           );
         })}
@@ -421,13 +413,13 @@ function HealthMetricsChart() {
           {activeData.data.map((value, index) => (
             <motion.div
               key={index}
-              className="relative w-8 flex flex-col items-center"
+              className="relative w-6 sm:w-8 flex flex-col items-center"
               initial={{ height: 0 }}
               animate={{ height: `${(value / Math.max(...activeData.data)) * 100}%` }}
               transition={{ duration: 1, delay: index * 0.05 }}
             >
               <div 
-                className={`w-6 rounded-lg bg-gradient-to-t ${activeData.color}`}
+                className={`w-4 sm:w-6 rounded-lg bg-gradient-to-t ${activeData.color}`}
                 style={{ height: '100%' }}
               />
               <div className="text-xs text-slate-500 mt-2">{["M", "T", "W", "T", "F", "S", "S"][index]}</div>
@@ -438,12 +430,12 @@ function HealthMetricsChart() {
 
       {/* Current value */}
       <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-blue-50/50 to-teal-50/50 border border-blue-100/50">
-        <div>
-          <div className="text-sm text-slate-600">Current {activeData.label}</div>
-          <div className="text-3xl font-bold text-slate-900">{activeData.value}</div>
+        <div className="min-w-0">
+          <div className="text-sm text-slate-600 truncate">Current {activeData.label}</div>
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 truncate">{activeData.value}</div>
         </div>
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${activeData.color} flex items-center justify-center`}>
-          <activeData.icon className="w-6 h-6 text-white" />
+        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${activeData.color} flex items-center justify-center flex-shrink-0 ml-2`}>
+          <activeData.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
         </div>
       </div>
     </motion.div>
@@ -509,9 +501,9 @@ export default function DashboardPage() {
   ];
 
   const upcomingAppointments = [
-    { time: "Today, 2:30 PM", doctor: "Dr. Adebola", department: "Cardiology", status: "confirmed" as const, type: "Consultation" },
-    { time: "Tomorrow, 10:00 AM", doctor: "Dr. Chioma", department: "Pediatrics", status: "pending" as const, type: "Follow-up" },
-    { time: "Nov 28, 11:00 AM", doctor: "Dr. Ahmed", department: "Dermatology", status: "confirmed" as const, type: "Check-up" },
+    { time: "Today, 2:30 PM", doctor: "Dr. Adebola", department: "Cardiology Department", status: "confirmed" as const, type: "Consultation" },
+    { time: "Tomorrow, 10:00 AM", doctor: "Dr. Chioma", department: "Pediatrics Department", status: "pending" as const, type: "Follow-up" },
+    { time: "Nov 28, 11:00 AM", doctor: "Dr. Ahmed", department: "Dermatology Department", status: "confirmed" as const, type: "Check-up" },
   ];
 
   const healthReminders = [
@@ -529,7 +521,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-6 sm:space-y-8 pb-12 px-4 sm:px-0">
       {/* Welcome header with animated gradient */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -538,35 +530,35 @@ export default function DashboardPage() {
         className="relative"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-teal-500/10 to-blue-600/10 rounded-2xl blur-xl" />
-        <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg">
-          <div>
+        <div className="relative flex flex-col sm:flex-row justify-between items-start gap-4 p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg">
+          <div className="flex-1 min-w-0">
             <motion.div 
-              className="flex items-center gap-3 mb-2"
+              className="flex items-center gap-3 mb-3"
               initial={{ x: -20 }}
               animate={{ x: 0 }}
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg flex-shrink-0">
                 <UserCheck className="w-5 h-5 text-white" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="text-xs font-medium text-slate-500">Good {time},</div>
-                <h1 className="text-3xl font-bold text-slate-900">
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 truncate">
                   Welcome back, <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">John</span>
                 </h1>
               </div>
             </motion.div>
-            <p className="text-slate-600 max-w-2xl">
+            <p className="text-slate-600 text-sm sm:text-base line-clamp-2 sm:line-clamp-none">
               Here's what's happening with your healthcare journey today. You have <span className="font-semibold text-blue-600">2 upcoming appointments</span> and <span className="font-semibold text-green-600">3 lab results</span> ready.
             </p>
           </div>
           <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 shadow-sm w-full sm:w-auto justify-center sm:justify-start"
             whileHover={{ scale: 1.05 }}
           >
-            <Shield className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium text-blue-700">Account Active</span>
+            <Shield className="w-4 h-4 text-blue-600 flex-shrink-0" />
+            <span className="text-sm font-medium text-blue-700 truncate">Account Active</span>
             <motion.div 
-              className="w-2 h-2 bg-green-500 rounded-full"
+              className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"
               animate={{ scale: [1, 1.5, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
@@ -575,7 +567,7 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Optimized stats grid - 4 cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} delay={index * 0.1} />
         ))}
@@ -583,20 +575,20 @@ export default function DashboardPage() {
 
       {/* Optimized quick actions - 4 cards */}
       <div>
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Quick Actions</h2>
-            <p className="text-slate-600 text-sm mt-1">Most important features for fast access</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+          <div className="min-w-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Quick Actions</h2>
+            <p className="text-slate-600 text-xs sm:text-sm mt-1">Most important features for fast access</p>
           </div>
           <Link 
             href="/patient-dashboard/appointments" 
-            className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group"
+            className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group w-fit"
           >
             View all
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action, index) => (
             <QuickActionCard key={index} {...action} delay={index * 0.1} />
           ))}
@@ -604,23 +596,23 @@ export default function DashboardPage() {
       </div>
 
       {/* Main content area with health metrics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Left column: Appointments and health metrics */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Upcoming appointments */}
+        <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+          {/* Upcoming appointments - RESPONSIVE FIX */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900">Upcoming Appointments</h2>
-                <p className="text-slate-600 text-sm mt-1">Your scheduled consultations and check-ups</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+              <div className="min-w-0">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Upcoming Appointments</h2>
+                <p className="text-slate-600 text-xs sm:text-sm mt-1">Your scheduled consultations and check-ups</p>
               </div>
               <Link 
                 href="/patient-dashboard/appointments" 
-                className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group"
+                className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 group w-fit"
               >
                 View calendar
                 <Calendar className="w-4 h-4 group-hover:scale-110 transition-transform" />
@@ -638,21 +630,21 @@ export default function DashboardPage() {
         </div>
 
         {/* Right column: Reminders and recent activity */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* Health reminders */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
+            className="p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+              <div className="min-w-0">
                 <h3 className="text-lg font-bold text-slate-900">Health Reminders</h3>
-                <p className="text-slate-600 text-sm mt-1">Stay on top of your health routine</p>
+                <p className="text-slate-600 text-xs sm:text-sm mt-1">Stay on top of your health routine</p>
               </div>
               <div className="flex items-center gap-2">
-                <Bell className="w-4 h-4 text-slate-400" />
+                <Bell className="w-4 h-4 text-slate-400 flex-shrink-0" />
                 <span className="text-sm text-slate-500">Active</span>
               </div>
             </div>
@@ -663,7 +655,7 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`flex items-center gap-4 p-3 rounded-xl border transition-all ${
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
                     reminder.status === "overdue" 
                       ? "bg-red-50/50 border-red-100 hover:border-red-200" 
                       : reminder.status === "warning"
@@ -673,7 +665,7 @@ export default function DashboardPage() {
                       : "bg-white/50 border-slate-200/30 hover:border-blue-200"
                   }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
                     reminder.status === "overdue" 
                       ? "bg-gradient-to-br from-red-500 to-rose-500" 
                       : reminder.status === "warning"
@@ -682,13 +674,13 @@ export default function DashboardPage() {
                       ? "bg-gradient-to-br from-blue-500 to-cyan-500"
                       : "bg-gradient-to-br from-teal-500 to-emerald-500"
                   }`}>
-                    <reminder.icon className="w-5 h-5 text-white" />
+                    <reminder.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-slate-900">{reminder.title}</div>
-                    <div className="text-sm text-slate-600">{reminder.time}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-slate-900 text-sm sm:text-base truncate">{reminder.title}</div>
+                    <div className="text-xs sm:text-sm text-slate-600 truncate">{reminder.time}</div>
                   </div>
-                  <div className={`w-2 h-2 rounded-full ${
+                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                     reminder.status === "overdue" 
                       ? "bg-red-500 animate-pulse" 
                       : reminder.status === "warning"
@@ -707,14 +699,14 @@ export default function DashboardPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
+            className="p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-200/50 shadow-lg"
           >
-            <div className="flex items-center justify-between mb-6">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+              <div className="min-w-0">
                 <h3 className="text-lg font-bold text-slate-900">Recent Activity</h3>
-                <p className="text-slate-600 text-sm mt-1">Your latest interactions and updates</p>
+                <p className="text-slate-600 text-xs sm:text-sm mt-1">Your latest interactions and updates</p>
               </div>
-              <RefreshCw className="w-4 h-4 text-slate-400 cursor-pointer hover:text-blue-500 transition-colors" />
+              <RefreshCw className="w-4 h-4 text-slate-400 cursor-pointer hover:text-blue-500 transition-colors flex-shrink-0" />
             </div>
             <div className="space-y-4">
               {recentActivities.map((activity, index) => (
@@ -725,20 +717,20 @@ export default function DashboardPage() {
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50/50 transition-colors group"
                 >
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${activity.color} flex items-center justify-center flex-shrink-0`}>
-                    <activity.icon className="w-5 h-5 text-white" />
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${activity.color} flex items-center justify-center flex-shrink-0`}>
+                    <activity.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-slate-900 truncate">{activity.title}</h4>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 capitalize">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                      <h4 className="font-medium text-slate-900 text-sm sm:text-base truncate">{activity.title}</h4>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 capitalize w-fit">
                         {activity.action}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-600 truncate">{activity.description}</p>
+                    <p className="text-xs sm:text-sm text-slate-600 truncate">{activity.description}</p>
                     <div className="flex items-center gap-2 text-xs text-slate-500 mt-1">
-                      <Clock className="w-3 h-3" />
-                      {activity.time}
+                      <Clock className="w-3 h-3 flex-shrink-0" />
+                      <span className="truncate">{activity.time}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -761,32 +753,32 @@ export default function DashboardPage() {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl" />
         </div>
         
-        <div className="relative p-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div className="relative p-4 sm:p-8">
+          <div className="flex flex-col lg:flex-row items-start gap-6">
             <motion.div 
-              className="relative"
+              className="relative mx-auto lg:mx-0"
               animate={{ rotate: [0, 10, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-xl">
-                <Sparkles className="w-8 h-8 text-white" />
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-xl">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
               <div className="absolute -inset-2 border-2 border-blue-400 rounded-2xl blur-md opacity-30" />
             </motion.div>
             
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
-                <h3 className="text-2xl font-bold text-slate-900">Today's Health Tip</h3>
-                <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Today's Health Tip</h3>
+                <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white w-fit">
                   NEW
                 </span>
               </div>
-              <p className="text-lg text-slate-700 mb-4">
+              <p className="text-sm sm:text-lg text-slate-700 mb-4 line-clamp-3 sm:line-clamp-none">
                 Staying hydrated is crucial for maintaining blood pressure levels. 
                 Aim for 8 glasses of water daily, especially in hot weather. 
                 <span className="font-semibold text-blue-600"> Dehydration can increase heart rate and decrease blood volume.</span>
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 {[
                   { icon: Heart, text: "Heart Health", color: "text-red-500" },
                   { icon: Zap, text: "Energy Boost", color: "text-yellow-500" },
@@ -795,11 +787,11 @@ export default function DashboardPage() {
                 ].map((item, index) => (
                   <motion.div 
                     key={index}
-                    className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
+                    className="flex items-center gap-2 text-xs sm:text-sm text-slate-600 hover:text-slate-900 transition-colors"
                     whileHover={{ x: 5 }}
                   >
-                    <item.icon className={`w-4 h-4 ${item.color}`} />
-                    <span>{item.text}</span>
+                    <item.icon className={`w-3 h-3 sm:w-4 sm:h-4 ${item.color}`} />
+                    <span className="truncate">{item.text}</span>
                   </motion.div>
                 ))}
               </div>
@@ -808,10 +800,10 @@ export default function DashboardPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold hover:shadow-lg transition-shadow flex items-center gap-2"
+              className="px-4 py-3 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold hover:shadow-lg transition-shadow flex items-center gap-2 w-full lg:w-auto justify-center"
             >
               <Brain className="w-4 h-4" />
-              Get More Tips
+              <span>Get More Tips</span>
             </motion.button>
           </div>
         </div>

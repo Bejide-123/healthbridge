@@ -24,7 +24,7 @@ export default function DashboardHeader() {
 
   const getPageTitle = () => {
     const path = pathname.replace('/patient-dashboard', '');
-    if (path === '' || path === '/') return "Dashboard Overview";
+    if (path === '' || path === '/') return "Dashboard";
     if (path.includes('/appointments')) return "Appointments";
     if (path.includes('/medical-records')) return "Medical Records";
     if (path.includes('/prescriptions')) return "Prescriptions";
