@@ -390,28 +390,28 @@ export default function HospitalDashboardPage() {
       title: "Check-in Patient", 
       description: "Register new or check-in existing patients", 
       icon: UserPlus, 
-      href: "/hospital/patients/add",
+      href: "/hospital-dashboard/patients",
       color: "blue" as const
     },
     { 
       title: "Book Appointment", 
       description: "Schedule consultation for patient", 
       icon: Calendar, 
-      href: "/hospital/appointments/book",
+      href: "/hospital-dashboard/appointments/book",
       color: "teal" as const
     },
     { 
       title: "Manage Queue", 
       description: "View and manage patient queue", 
       icon: Clock, 
-      href: "/hospital/queue",
+      href: "/hospital-dashboard/queue",
       color: "purple" as const
     },
     { 
       title: "Emergency", 
       description: "Handle emergency requests", 
       icon: Ambulance, 
-      href: "/hospital/emergency",
+      href: "/hospital-dashboard/emergency",
       color: "red" as const
     },
   ];
