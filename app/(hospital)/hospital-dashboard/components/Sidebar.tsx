@@ -36,18 +36,16 @@ export default function HospitalSidebar() {
   const sidebarItems: SidebarItem[] = [
     { name: "Dashboard", href: "/hospital-dashboard", icon: LayoutDashboard },
     { name: "Patients", href: "/hospital-dashboard/patients", icon: Users, badge: 42 },
-    { name: "Add Patient", href: "/hospital/patients/add", icon: UserPlus },
-    { name: "Appointments", href: "/hospital/appointments", icon: Calendar, badge: 8 },
-    { name: "Book Appointment", href: "/hospital/appointments/book", icon: Calendar },
-    { name: "Queue", href: "/hospital/queue", icon: Clock, badge: 7 },
-    { name: "Queue Display", href: "/hospital/queue/display", icon: Monitor },
-    { name: "Medical Records", href: "/hospital/patients", icon: FileText },
-    { name: "Prescriptions", href: "/hospital/pharmacy", icon: Pill },
-    { name: "Lab Tests", href: "/hospital/lab", icon: Microscope },
-    { name: "Messages", href: "/hospital/messages", icon: MessageSquare, badge: 3 },
-    { name: "Emergency", href: "/hospital/emergency", icon: Ambulance, badge: 2 },
-    { name: "Analytics", href: "/hospital/analytics", icon: BarChart3 },
-    { name: "Settings", href: "/hospital/settings", icon: Settings },
+    { name: "Appointments", href: "/hospital-dashboard/appointments", icon: Calendar, badge: 8 },
+    { name: "Book Appointment", href: "/hospital-dashboard/appointments/book", icon: Calendar },
+    { name: "Queue", href: "/hospital-dashboard/queue", icon: Clock, badge: 7 },
+    { name: "Medical Records", href: "/hospital-dashboard/records", icon: FileText },
+    { name: "Prescriptions", href: "/hospital-dashboard/pharmacy", icon: Pill },
+    { name: "Lab Tests", href: "/hospital-dashboard/lab", icon: Microscope },
+    { name: "Messages", href: "/hospital-dashboard/messages", icon: MessageSquare, badge: 3 },
+    { name: "Emergency", href: "/hospital-dashboard/emergency", icon: Ambulance, badge: 2 },
+    { name: "Analytics", href: "/hospital-dashboard/analytics", icon: BarChart3 },
+    { name: "Settings", href: "/hospital-dashboard/settings", icon: Settings },
   ];
 
   // Simplified quick actions
@@ -59,10 +57,7 @@ export default function HospitalSidebar() {
   ];
 
   const isActive = (href: string) => {
-    if (href === "/hospital-dashboard") {
-      return pathname === "/hospital-dashboard";
-    }
-    return pathname.startsWith(href);
+    return pathname === href;
   };
 
   return (
