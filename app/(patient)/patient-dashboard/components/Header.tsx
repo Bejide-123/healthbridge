@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSidebar } from "../../context/SidebarContext";
+import { useRouter } from "next/navigation";
 
 export default function DashboardHeader() {
   const pathname = usePathname();
@@ -19,6 +20,8 @@ export default function DashboardHeader() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  
+  const router = useRouter();
   
   const { toggleSidebar, closeSidebar } = useSidebar();
 
@@ -178,6 +181,7 @@ export default function DashboardHeader() {
               <button 
                 className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
                 aria-label="Notifications"
+                onClick={() => router.push('/patient-dashboard/notifications')}
               >
                 <Bell className="w-5 h-5 text-slate-600" />
                 <motion.span 
@@ -193,6 +197,7 @@ export default function DashboardHeader() {
               <button 
                 className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
                 aria-label="Messages"
+                onClick={() => router.push('/patient-dashboard/messages')}
               >
                 <MessageSquare className="w-5 h-5 text-slate-600" />
                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full" />
@@ -202,6 +207,7 @@ export default function DashboardHeader() {
               <button 
                 className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
                 aria-label="Settings"
+                onClick={() => router.push('/patient-dashboard/settings')}
               >
                 <Settings className="w-5 h-5 text-slate-600" />
               </button>
@@ -213,6 +219,7 @@ export default function DashboardHeader() {
               <button 
                 className="relative p-2 rounded-lg hover:bg-slate-100 transition-colors"
                 aria-label="Notifications"
+                onClick={() => router.push('/patient-dashboard/notifications')}
               >
                 <Bell className="w-5 h-5 text-slate-600" />
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center">
@@ -290,7 +297,7 @@ export default function DashboardHeader() {
                         <TrendingUp className="w-4 h-4" />
                         <span>Health Tracker</span>
                       </Link>
-                      <button 
+                      {/* <button 
                         className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-slate-700 w-full"
                         onClick={() => setIsDarkMode(!isDarkMode)}
                       >
@@ -307,7 +314,7 @@ export default function DashboardHeader() {
                             }`}
                           />
                         </div>
-                      </button>
+                      </button> */}
                       <div className="mt-2 pt-2 border-t border-slate-100">
                         <Link 
                           href="/signout" 

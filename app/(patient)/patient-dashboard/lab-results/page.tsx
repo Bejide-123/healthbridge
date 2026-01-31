@@ -5,15 +5,11 @@ import { useState } from "react";
 import { 
   Activity, Microscope, FileText, TrendingUp,
   Download, Filter, Search, Calendar,
-  CheckCircle, Clock, AlertTriangle, ArrowUpRight,
-  ArrowDownRight, Eye, Share2, Printer,
-  ChevronRight, ChevronDown, Bell, Heart,
-  Battery, Thermometer, Droplets, Stethoscope,
-  Zap, Brain, Pill, TestTube, Image,
-  Download as DownloadIcon, Share as ShareIcon,
-  FileWarning, FileCheck, FileX, RefreshCw,
-  MessageSquare, User, QrCode, Smartphone,
-  MapPin, Phone, Mail, ExternalLink,
+  CheckCircle, Clock, AlertTriangle, Eye, Share2, Printer,
+  ChevronRight, ChevronDown, User, Stethoscope,
+  Droplets, TestTube, Image, Pill, Zap, Brain,
+  Download as DownloadIcon, FileWarning, FileCheck, RefreshCw,
+  MessageSquare, QrCode, Smartphone, MapPin, Phone, Mail, ExternalLink,
   X, MoreVertical
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,11 +23,11 @@ export default function LabResultsPage() {
 
   const categories = [
     { id: "all", label: "All Tests", icon: Activity, count: 12 },
-    { id: "blood", label: "Blood Tests", icon: Droplets, count: 5 },
-    { id: "urine", label: "Urine Tests", icon: TestTube, count: 3 },
+    { id: "blood", label: "Blood", icon: Droplets, count: 5 },
+    { id: "urine", label: "Urine", icon: TestTube, count: 3 },
     { id: "imaging", label: "Imaging", icon: Image, count: 2 },
     { id: "pathology", label: "Pathology", icon: Microscope, count: 1 },
-    { id: "vitals", label: "Vitals", icon: Thermometer, count: 4 },
+    { id: "vitals", label: "Vitals", icon: Activity, count: 4 },
   ];
 
   const stats = [
@@ -153,7 +149,7 @@ export default function LabResultsPage() {
       case "urine": return TestTube;
       case "imaging": return Image;
       case "pathology": return Microscope;
-      case "vitals": return Thermometer;
+      case "vitals": return Activity;
       default: return Activity;
     }
   };
@@ -191,30 +187,30 @@ export default function LabResultsPage() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 md:gap-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Lab Results</h1>
-          <p className="text-slate-600 mt-1 md:mt-2 text-sm md:text-base">View and manage your medical test results and reports</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Lab Results</h1>
+          <p className="text-gray-600 mt-1 md:mt-2 text-sm md:text-base">View and manage your medical test results and reports</p>
         </div>
         
         <div className="flex items-center gap-2 md:gap-3 w-full lg:w-auto">
-          <div className="flex items-center gap-1 md:gap-2 p-1 rounded-lg bg-slate-100">
+          <div className="flex items-center gap-1 md:gap-2 p-1 rounded-lg bg-gray-100">
             <button
               onClick={() => setViewMode("list")}
-              className={`p-1.5 md:p-2 rounded-md transition-all ${viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-slate-200"}`}
+              className={`p-1.5 md:p-2 rounded-md transition-all ${viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-gray-200"}`}
             >
-              <FileText className="w-4 h-4 text-slate-600" />
+              <FileText className="w-4 h-4 text-gray-600" />
             </button>
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 md:p-2 rounded-md transition-all ${viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-slate-200"}`}
+              className={`p-1.5 md:p-2 rounded-md transition-all ${viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-gray-200"}`}
             >
-              <Activity className="w-4 h-4 text-slate-600" />
+              <Activity className="w-4 h-4 text-gray-600" />
             </button>
           </div>
           
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-3 md:px-4 py-2 md:py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all flex items-center gap-1 md:gap-2 text-sm md:text-base flex-shrink-0"
+            className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all flex items-center gap-1 md:gap-2 text-sm md:text-base flex-shrink-0"
           >
             <Download className="w-3.5 h-3.5 md:w-4 md:h-4" />
             <span className="hidden sm:inline">Export All</span>
@@ -234,18 +230,18 @@ export default function LabResultsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl md:rounded-2xl border border-slate-200/50 shadow-sm p-4 md:p-6"
+              className="bg-white rounded-xl md:rounded-2xl border border-gray-200 shadow-sm p-4 md:p-6"
             >
               <div className="flex items-center justify-between mb-3 md:mb-4">
-                <div className={`w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
-                  <Icon className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
+                  <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 {stat.label === "Abnormal Results" && stat.value === "0" ? (
-                  <div className="px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                  <div className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                     All Normal
                   </div>
                 ) : (
-                  <div className={`text-xs font-medium px-1.5 py-0.5 md:px-2 md:py-1 rounded-full ${
+                  <div className={`text-xs font-medium px-2 py-1 rounded-full ${
                     stat.label.includes("Pending") ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"
                   }`}>
                     {stat.label === "Last Checkup" ? "Recent" : "Active"}
@@ -253,8 +249,8 @@ export default function LabResultsPage() {
                 )}
               </div>
               
-              <div className="text-xl md:text-2xl font-bold text-slate-900">{stat.value}</div>
-              <div className="text-xs md:text-sm text-slate-600 truncate">{stat.label}</div>
+              <div className="text-xl md:text-2xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-sm text-gray-600 truncate">{stat.label}</div>
             </motion.div>
           );
         })}
@@ -264,9 +260,10 @@ export default function LabResultsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
         {/* Left Column - Categories & Filters */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl md:rounded-2xl border border-slate-200/50 shadow-sm p-4 md:p-6 lg:sticky lg:top-6">
-            <h2 className="text-base md:text-lg font-bold text-slate-900 mb-4">Test Categories</h2>
+          <div className="bg-white rounded-xl md:rounded-2xl border border-gray-200 shadow-sm p-4 md:p-6 lg:sticky lg:top-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Test Categories</h2>
             
+            {/* Categories Grid - Clean and readable */}
             <div className="space-y-2">
               {categories.map((category) => {
                 const Icon = category.icon;
@@ -276,27 +273,29 @@ export default function LabResultsPage() {
                   <button
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    className={`w-full flex items-center justify-between px-3 md:px-4 py-2.5 md:py-3 rounded-lg md:rounded-xl transition-all ${
+                    className={`w-full flex items-center justify-between px-3 md:px-4 py-3 md:py-3.5 rounded-lg transition-all ${
                       isActive
-                        ? "bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-600 border border-blue-100"
-                        : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                        ? "bg-blue-50 text-blue-600 border border-blue-200"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 border border-transparent"
                     }`}
                   >
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className={`p-1.5 md:p-2 rounded-md md:rounded-lg ${
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-md ${
                         isActive
-                          ? "bg-gradient-to-br from-blue-500 to-cyan-500 text-white"
-                          : "bg-slate-100 text-slate-600"
+                          ? "bg-blue-100 text-blue-600"
+                          : "bg-gray-100 text-gray-600"
                       }`}>
-                        <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <Icon className="w-4 h-4 md:w-5 md:h-5" />
                       </div>
-                      <span className="font-medium text-sm md:text-base">{category.label}</span>
+                      <span className="font-medium text-sm md:text-base">
+                        {category.label}
+                      </span>
                     </div>
                     
-                    <span className={`px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium ${
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       isActive
                         ? "bg-blue-100 text-blue-600"
-                        : "bg-slate-100 text-slate-600"
+                        : "bg-gray-100 text-gray-600"
                     }`}>
                       {category.count}
                     </span>
@@ -306,54 +305,54 @@ export default function LabResultsPage() {
             </div>
             
             {/* Quick Filters */}
-            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-200">
-              <h3 className="font-medium text-slate-900 mb-3 text-sm md:text-base">Quick Filters</h3>
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+              <h3 className="font-medium text-gray-900 mb-3 text-sm md:text-base">Quick Filters</h3>
               
-              <div className="space-y-2 md:space-y-3">
-                <button className="w-full px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl border border-slate-200 hover:border-blue-200 hover:bg-blue-50 transition-all flex items-center gap-2 md:gap-3">
-                  <AlertTriangle className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-600" />
-                  <span className="font-medium text-slate-900 text-sm md:text-base">Abnormal Results</span>
+              <div className="space-y-2">
+                <button className="w-full px-3 py-2.5 rounded-lg border border-gray-200 hover:border-amber-200 hover:bg-amber-50 transition-all flex items-center gap-3">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span className="font-medium text-gray-900 text-sm">Abnormal Results</span>
                 </button>
                 
-                <button className="w-full px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl border border-slate-200 hover:border-green-200 hover:bg-green-50 transition-all flex items-center gap-2 md:gap-3">
-                  <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-600" />
-                  <span className="font-medium text-slate-900 text-sm md:text-base">Pending Tests</span>
+                <button className="w-full px-3 py-2.5 rounded-lg border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-all flex items-center gap-3">
+                  <Clock className="w-4 h-4 text-blue-600" />
+                  <span className="font-medium text-gray-900 text-sm">Pending Tests</span>
                 </button>
                 
-                <button className="w-full px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl border border-slate-200 hover:border-purple-200 hover:bg-purple-50 transition-all flex items-center gap-2 md:gap-3">
-                  <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-600" />
-                  <span className="font-medium text-slate-900 text-sm md:text-base">This Month</span>
+                <button className="w-full px-3 py-2.5 rounded-lg border border-gray-200 hover:border-purple-200 hover:bg-purple-50 transition-all flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-purple-600" />
+                  <span className="font-medium text-gray-900 text-sm">This Month</span>
                 </button>
               </div>
             </div>
             
             {/* Lab Information */}
-            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-200">
-              <h3 className="font-medium text-slate-900 mb-3 text-sm md:text-base">Primary Lab</h3>
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+              <h3 className="font-medium text-gray-900 mb-3 text-sm md:text-base">Primary Lab</h3>
               
-              <div className="p-3 md:p-4 rounded-lg md:rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200">
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-                    <Microscope className="w-4 h-4 md:w-5 md:h-5 text-white" />
+              <div className="p-3 md:p-4 rounded-lg bg-blue-50 border border-blue-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <Microscope className="w-5 h-5 text-white" />
                   </div>
-                  <div className="min-w-0">
-                    <div className="font-bold text-blue-900 text-sm md:text-base truncate">LUTH Central Lab</div>
-                    <div className="text-xs md:text-sm text-blue-700 truncate">Lagos University Teaching Hospital</div>
+                  <div>
+                    <div className="font-bold text-blue-900 text-sm">LUTH Central Lab</div>
+                    <div className="text-xs text-blue-700">Lagos University Teaching Hospital</div>
                   </div>
                 </div>
                 
-                <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm text-blue-800">
-                  <div className="flex items-center gap-1.5 md:gap-2">
-                    <MapPin className="w-3 h-3 flex-shrink-0" />
-                    <span className="truncate">Idi-Araba, Surulere, Lagos</span>
+                <div className="space-y-2 text-sm text-blue-800">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 flex-shrink-0" />
+                    <span>Idi-Araba, Surulere, Lagos</span>
                   </div>
-                  <div className="flex items-center gap-1.5 md:gap-2">
-                    <Phone className="w-3 h-3 flex-shrink-0" />
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 flex-shrink-0" />
                     <span>01-234-5678</span>
                   </div>
-                  <div className="flex items-center gap-1.5 md:gap-2">
-                    <Mail className="w-3 h-3 flex-shrink-0" />
-                    <span className="truncate">lab@luth.gov.ng</span>
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 flex-shrink-0" />
+                    <span>lab@luth.gov.ng</span>
                   </div>
                 </div>
               </div>
@@ -364,29 +363,29 @@ export default function LabResultsPage() {
         {/* Right Column - Results List */}
         <div className="lg:col-span-3 space-y-4 md:space-y-6">
           {/* Search & Filter Bar */}
-          <div className="bg-white rounded-xl md:rounded-2xl border border-slate-200/50 shadow-sm p-4 md:p-6">
+          <div className="bg-white rounded-xl md:rounded-2xl border border-gray-200 shadow-sm p-4 md:p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4 mb-4 md:mb-6">
-              <h2 className="text-lg font-bold text-slate-900 mb-2 sm:mb-0">Test Results</h2>
+              <h2 className="text-lg font-bold text-gray-900 mb-2 sm:mb-0">Test Results</h2>
               
               <div className="flex items-center gap-2 md:gap-3 w-full sm:w-auto">
                 <div className="relative flex-1 sm:flex-none">
                   <input
                     type="search"
                     placeholder="Search tests..."
-                    className="pl-9 pr-3 md:pl-10 md:pr-4 py-2 md:py-2.5 rounded-lg bg-slate-100 border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none w-full sm:w-48 lg:w-64"
+                    className="pl-9 pr-3 md:pl-10 md:pr-4 py-2 md:py-2.5 rounded-lg bg-gray-100 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none w-full sm:w-48 lg:w-64"
                   />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 md:w-4 md:h-4 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
                 
-                <button className="p-2 md:p-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors flex-shrink-0">
-                  <Filter className="w-4 h-4 text-slate-600" />
+                <button className="p-2 md:p-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors flex-shrink-0">
+                  <Filter className="w-4 h-4 text-gray-600" />
                 </button>
               </div>
             </div>
 
             {/* Results List - List View */}
             {viewMode === "list" ? (
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-4">
                 {filteredResults.map((result, index) => {
                   const CategoryIcon = getCategoryIcon(result.category);
                   const StatusIcon = getStatusIcon(result.status);
@@ -397,42 +396,42 @@ export default function LabResultsPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all"
+                      className="p-4 md:p-5 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
                     >
-                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 md:gap-4">
+                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                         {/* Test Info */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-start md:items-center gap-2 md:gap-3 mb-2">
-                            <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          <div className="flex items-start md:items-center gap-3 mb-3">
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
                               result.category === 'blood' ? 'bg-red-100 text-red-600' :
                               result.category === 'urine' ? 'bg-yellow-100 text-yellow-600' :
                               result.category === 'imaging' ? 'bg-blue-100 text-blue-600' :
                               'bg-purple-100 text-purple-600'
                             }`}>
-                              <CategoryIcon className="w-4 h-4 md:w-5 md:h-5" />
+                              <CategoryIcon className="w-5 h-5 md:w-6 md:h-6" />
                             </div>
                             
-                            <div className="min-w-0 flex-1">
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                                <h3 className="font-bold text-slate-900 text-sm md:text-base truncate">{result.testName}</h3>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(result.status)} flex items-center gap-1 w-fit`}>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                                <h3 className="font-bold text-gray-900 text-base md:text-lg truncate">{result.testName}</h3>
+                                <span className={`px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(result.status)} flex items-center gap-1 w-fit`}>
                                   <StatusIcon className="w-3 h-3" />
                                   {result.status === 'ready' ? 'Results Ready' : 
                                    result.status === 'pending' ? 'Pending' : 'In Progress'}
                                 </span>
                               </div>
                               
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 md:gap-4 text-xs md:text-sm text-slate-600">
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600">
                                 <div className="flex items-center gap-1">
-                                  <Calendar className="w-3 h-3 flex-shrink-0" />
+                                  <Calendar className="w-4 h-4 flex-shrink-0" />
                                   <span>{result.date}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <User className="w-3 h-3 flex-shrink-0" />
+                                  <User className="w-4 h-4 flex-shrink-0" />
                                   <span className="truncate">{result.orderedBy}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Microscope className="w-3 h-3 flex-shrink-0" />
+                                  <Microscope className="w-4 h-4 flex-shrink-0" />
                                   <span className="truncate">{result.lab}</span>
                                 </div>
                               </div>
@@ -441,17 +440,17 @@ export default function LabResultsPage() {
                           
                           {/* Quick Parameters Preview */}
                           {result.status === 'ready' && result.parameters.length > 0 && (
-                            <div className="mt-3 md:mt-4">
-                              <div className="text-xs md:text-sm font-medium text-slate-700 mb-1 md:mb-2">Key Parameters:</div>
-                              <div className="flex flex-wrap gap-1.5 md:gap-2">
+                            <div className="mt-4">
+                              <div className="text-sm font-medium text-gray-700 mb-2">Key Parameters:</div>
+                              <div className="flex flex-wrap gap-2">
                                 {result.parameters.slice(0, 3).map((param, idx) => (
-                                  <div key={idx} className={`px-2 py-1 md:px-3 md:py-1.5 rounded-lg ${
+                                  <div key={idx} className={`px-3 py-2 rounded-lg ${
                                     param.status === 'normal' ? 'bg-green-50 border border-green-100' :
                                     param.status === 'borderline' ? 'bg-amber-50 border border-amber-100' :
                                     'bg-red-50 border border-red-100'
                                   }`}>
-                                    <div className="text-xs md:text-sm font-medium text-slate-900">{param.name}</div>
-                                    <div className={`text-xs ${
+                                    <div className="text-sm font-medium text-gray-900">{param.name}</div>
+                                    <div className={`text-sm ${
                                       param.status === 'normal' ? 'text-green-700' :
                                       param.status === 'borderline' ? 'text-amber-700' :
                                       'text-red-700'
@@ -461,8 +460,8 @@ export default function LabResultsPage() {
                                   </div>
                                 ))}
                                 {result.parameters.length > 3 && (
-                                  <div className="px-2 py-1 md:px-3 md:py-1.5 rounded-lg bg-slate-50 border border-slate-100">
-                                    <div className="text-xs md:text-sm font-medium text-slate-900">+{result.parameters.length - 3} more</div>
+                                  <div className="px-3 py-2 rounded-lg bg-gray-50 border border-gray-100">
+                                    <div className="text-sm font-medium text-gray-900">+{result.parameters.length - 3} more</div>
                                   </div>
                                 )}
                               </div>
@@ -471,44 +470,40 @@ export default function LabResultsPage() {
                         </div>
                         
                         {/* Actions */}
-                        <div className="flex items-center gap-1.5 md:gap-2 self-end lg:self-center mt-2 lg:mt-0">
+                        <div className="flex items-center gap-2 self-end lg:self-center">
                           {result.status === 'ready' && (
                             <>
                               <button
                                 onClick={() => handleViewDetails(result)}
-                                className="px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all text-xs md:text-sm flex items-center gap-1"
+                                className="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all text-sm flex items-center gap-1"
                               >
-                                <Eye className="w-3 h-3" />
+                                <Eye className="w-4 h-4" />
                                 View
                               </button>
                               
                               <button
                                 onClick={() => handleShareResult(result)}
-                                className="px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-xs md:text-sm flex items-center gap-1"
+                                className="px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-sm flex items-center gap-1"
                               >
-                                <Share2 className="w-3 h-3" />
+                                <Share2 className="w-4 h-4" />
                                 Share
                               </button>
                             </>
                           )}
                           
                           {result.status === 'pending' && (
-                            <button className="px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all text-xs md:text-sm flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
+                            <button className="px-3 py-2 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all text-sm flex items-center gap-1">
+                              <Clock className="w-4 h-4" />
                               Pending
                             </button>
                           )}
-                          
-                          <button className="p-1 md:p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
-                            <MoreVertical className="w-4 h-4 text-slate-600" />
-                          </button>
                         </div>
                       </div>
                       
                       {/* Summary */}
                       {result.status === 'ready' && result.summary && (
-                        <div className="mt-3 pt-3 border-t border-slate-100">
-                          <div className="text-xs md:text-sm text-slate-600">{result.summary}</div>
+                        <div className="mt-4 pt-4 border-t border-gray-100">
+                          <div className="text-sm text-gray-600">{result.summary}</div>
                         </div>
                       )}
                     </motion.div>
@@ -517,7 +512,7 @@ export default function LabResultsPage() {
               </div>
             ) : (
               /* Results Grid - Grid View */
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredResults.map((result, index) => {
                   const CategoryIcon = getCategoryIcon(result.category);
                   const StatusIcon = getStatusIcon(result.status);
@@ -528,62 +523,62 @@ export default function LabResultsPage() {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1 }}
-                      className="bg-white rounded-lg md:rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all p-3 md:p-4"
+                      className="bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all p-4 md:p-5"
                     >
-                      <div className="flex items-start justify-between mb-3 md:mb-4">
-                        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center ${
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
                           result.category === 'blood' ? 'bg-red-100 text-red-600' :
                           result.category === 'urine' ? 'bg-yellow-100 text-yellow-600' :
                           result.category === 'imaging' ? 'bg-blue-100 text-blue-600' :
                           'bg-purple-100 text-purple-600'
                         }`}>
-                          <CategoryIcon className="w-5 h-5 md:w-6 md:h-6" />
+                          <CategoryIcon className="w-6 h-6" />
                         </div>
                         
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(result.status)} flex items-center gap-1`}>
+                        <span className={`px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(result.status)} flex items-center gap-1`}>
                           <StatusIcon className="w-3 h-3" />
                           {result.status === 'ready' ? 'Ready' : 'Pending'}
                         </span>
                       </div>
                       
-                      <h3 className="font-bold text-slate-900 mb-2 line-clamp-2 text-sm md:text-base">{result.testName}</h3>
+                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 text-base">{result.testName}</h3>
                       
-                      <div className="space-y-1.5 md:space-y-2 text-xs md:text-sm text-slate-600 mb-3 md:mb-4">
-                        <div className="flex items-center gap-1.5 md:gap-2">
-                          <Calendar className="w-3 h-3 flex-shrink-0" />
+                      <div className="space-y-2 text-sm text-gray-600 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 flex-shrink-0" />
                           <span>{result.date}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 md:gap-2">
-                          <User className="w-3 h-3 flex-shrink-0" />
+                        <div className="flex items-center gap-2">
+                          <User className="w-4 h-4 flex-shrink-0" />
                           <span className="truncate">{result.orderedBy}</span>
                         </div>
                       </div>
                       
                       {result.status === 'ready' && result.summary && (
-                        <div className="mb-3 md:mb-4">
-                          <div className="text-xs text-slate-500 mb-1">Summary</div>
-                          <div className="text-xs md:text-sm text-slate-700 line-clamp-2">{result.summary}</div>
+                        <div className="mb-4">
+                          <div className="text-xs text-gray-500 mb-1">Summary</div>
+                          <div className="text-sm text-gray-700 line-clamp-2">{result.summary}</div>
                         </div>
                       )}
                       
-                      <div className="flex gap-1.5 md:gap-2">
+                      <div className="flex gap-2">
                         {result.status === 'ready' ? (
                           <>
                             <button
                               onClick={() => handleViewDetails(result)}
-                              className="flex-1 px-2.5 py-2 md:px-3 md:py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all text-xs md:text-sm"
+                              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all text-sm"
                             >
                               View
                             </button>
                             <button
                               onClick={() => handleShareResult(result)}
-                              className="flex-1 px-2.5 py-2 md:px-3 md:py-2 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-xs md:text-sm"
+                              className="flex-1 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-sm"
                             >
                               Share
                             </button>
                           </>
                         ) : (
-                          <button className="w-full px-2.5 py-2 md:px-3 md:py-2 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all text-xs md:text-sm">
+                          <button className="w-full px-3 py-2 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all text-sm">
                             Results Pending
                           </button>
                         )}
@@ -596,24 +591,24 @@ export default function LabResultsPage() {
           </div>
 
           {/* Abnormal Results Alert */}
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl md:rounded-2xl border border-green-200 p-4 md:p-6">
-            <div className="flex items-start gap-3 md:gap-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
+          <div className="bg-green-50 rounded-xl md:rounded-2xl border border-green-200 p-4 md:p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center flex-shrink-0">
+                <CheckCircle className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-green-900 mb-1 md:mb-2 text-sm md:text-base">All Results Within Normal Range</h3>
-                <p className="text-green-700 mb-3 md:mb-4 text-xs md:text-sm">
+                <h3 className="font-bold text-green-900 mb-2 text-base md:text-lg">All Results Within Normal Range</h3>
+                <p className="text-green-700 mb-4 text-sm md:text-base">
                   Great news! All your recent lab test results are within normal limits. 
                   Continue with your current healthcare routine and maintain regular checkups.
                 </p>
-                <div className="flex flex-wrap gap-2 md:gap-3">
-                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white border border-green-200 text-green-700 hover:bg-green-50 transition-all text-xs md:text-sm flex items-center gap-1.5 md:gap-2">
-                    <TrendingUp className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                <div className="flex flex-wrap gap-2">
+                  <button className="px-3 py-2 rounded-lg bg-white border border-green-200 text-green-700 hover:bg-green-50 transition-all text-sm flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4" />
                     View Trends
                   </button>
-                  <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-500 text-white hover:from-green-700 hover:to-emerald-600 hover:shadow-lg transition-all text-xs md:text-sm flex items-center gap-1.5 md:gap-2">
-                    <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                  <button className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-600 to-emerald-500 text-white hover:from-green-700 hover:to-emerald-600 hover:shadow-lg transition-all text-sm flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
                     Schedule Checkup
                   </button>
                 </div>
@@ -622,36 +617,36 @@ export default function LabResultsPage() {
           </div>
 
           {/* Lab Testing Information */}
-          <div className="bg-white rounded-xl md:rounded-2xl border border-slate-200/50 shadow-sm p-4 md:p-6">
-            <h2 className="text-lg font-bold text-slate-900 mb-4 md:mb-6">Understanding Your Results</h2>
+          <div className="bg-white rounded-xl md:rounded-2xl border border-gray-200 shadow-sm p-4 md:p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4 md:mb-6">Understanding Your Results</h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              <div className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-2 md:mb-3">
-                  <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
+              <div className="p-4 rounded-xl border border-gray-200">
+                <div className="w-10 h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-3">
+                  <CheckCircle className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-900 mb-1 md:mb-2 text-sm md:text-base">Normal Range</h4>
-                <p className="text-xs md:text-sm text-slate-600">
+                <h4 className="font-bold text-gray-900 mb-2 text-base">Normal Range</h4>
+                <p className="text-sm text-gray-600">
                   Results within expected values for your age, gender, and health status.
                 </p>
               </div>
               
-              <div className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mb-2 md:mb-3">
-                  <AlertTriangle className="w-4 h-4 md:w-5 md:h-5" />
+              <div className="p-4 rounded-xl border border-gray-200">
+                <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
+                  <AlertTriangle className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-900 mb-1 md:mb-2 text-sm md:text-base">Borderline</h4>
-                <p className="text-xs md:text-sm text-slate-600">
+                <h4 className="font-bold text-gray-900 mb-2 text-base">Borderline</h4>
+                <p className="text-sm text-gray-600">
                   Results slightly outside normal range. May require monitoring or lifestyle changes.
                 </p>
               </div>
               
-              <div className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center mb-2 md:mb-3">
-                  <FileWarning className="w-4 h-4 md:w-5 md:h-5" />
+              <div className="p-4 rounded-xl border border-gray-200">
+                <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center mb-3">
+                  <FileWarning className="w-5 h-5" />
                 </div>
-                <h4 className="font-bold text-slate-900 mb-1 md:mb-2 text-sm md:text-base">Abnormal</h4>
-                <p className="text-xs md:text-sm text-slate-600">
+                <h4 className="font-bold text-gray-900 mb-2 text-base">Abnormal</h4>
+                <p className="text-sm text-gray-600">
                   Results significantly outside normal range. Requires medical attention and follow-up.
                 </p>
               </div>
@@ -679,27 +674,27 @@ export default function LabResultsPage() {
               className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 overflow-y-auto"
             >
               <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white z-10 border-b border-slate-200 p-4 md:p-6">
+                <div className="sticky top-0 bg-white z-10 border-b border-gray-200 p-4 md:p-6">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="text-xl md:text-2xl font-bold text-slate-900 truncate">{selectedResult.testName}</h3>
-                      <div className="text-slate-600 mt-1 text-sm md:text-base truncate">
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 truncate">{selectedResult.testName}</h3>
+                      <div className="text-gray-600 mt-1 text-sm md:text-base truncate">
                         {selectedResult.date} • Ordered by {selectedResult.orderedBy}
                       </div>
                     </div>
                     
                     <div className="flex items-center gap-2 self-end sm:self-auto">
-                      <button className="p-1.5 md:p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                        <Printer className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+                      <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <Printer className="w-5 h-5 text-gray-600" />
                       </button>
-                      <button className="p-1.5 md:p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                        <DownloadIcon className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+                      <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <DownloadIcon className="w-5 h-5 text-gray-600" />
                       </button>
                       <button
                         onClick={() => setShowResultDetails(false)}
-                        className="p-1.5 md:p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                       >
-                        <X className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+                        <X className="w-5 h-5 text-gray-600" />
                       </button>
                     </div>
                   </div>
@@ -708,43 +703,43 @@ export default function LabResultsPage() {
                 <div className="p-4 md:p-6 space-y-6 md:space-y-8">
                   {/* Lab Info */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200">
-                      <h4 className="font-bold text-blue-900 mb-2 md:mb-3 text-sm md:text-base">Laboratory Information</h4>
-                      <div className="space-y-2 md:space-y-3">
+                    <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                      <h4 className="font-bold text-blue-900 mb-3 text-base">Laboratory Information</h4>
+                      <div className="space-y-3">
                         <div>
-                          <div className="text-xs md:text-sm text-blue-700">Lab Facility</div>
-                          <div className="font-medium text-blue-900 text-sm md:text-base truncate">{selectedResult.lab}</div>
+                          <div className="text-sm text-blue-700">Lab Facility</div>
+                          <div className="font-medium text-blue-900 text-base truncate">{selectedResult.lab}</div>
                         </div>
                         {selectedResult.technician && (
                           <div>
-                            <div className="text-xs md:text-sm text-blue-700">Analyzed By</div>
-                            <div className="font-medium text-blue-900 text-sm md:text-base truncate">{selectedResult.technician}</div>
+                            <div className="text-sm text-blue-700">Analyzed By</div>
+                            <div className="font-medium text-blue-900 text-base truncate">{selectedResult.technician}</div>
                           </div>
                         )}
                         <div>
-                          <div className="text-xs md:text-sm text-blue-700">Report ID</div>
-                          <div className="font-medium text-blue-900 text-sm md:text-base truncate">{selectedResult.id}</div>
+                          <div className="text-sm text-blue-700">Report ID</div>
+                          <div className="font-medium text-blue-900 text-base truncate">{selectedResult.id}</div>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200">
-                      <h4 className="font-bold text-green-900 mb-2 md:mb-3 text-sm md:text-base">Result Summary</h4>
-                      <div className="space-y-2 md:space-y-3">
+                    <div className="p-4 rounded-xl bg-green-50 border border-green-200">
+                      <h4 className="font-bold text-green-900 mb-3 text-base">Result Summary</h4>
+                      <div className="space-y-3">
                         <div>
-                          <div className="text-xs md:text-sm text-green-700">Status</div>
-                          <span className={`px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium ${getStatusColor(selectedResult.status)} inline-flex items-center gap-1`}>
-                            <FileCheck className="w-3 h-3" />
+                          <div className="text-sm text-green-700">Status</div>
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(selectedResult.status)} inline-flex items-center gap-1`}>
+                            <FileCheck className="w-4 h-4" />
                             Results Ready
                           </span>
                         </div>
                         <div>
-                          <div className="text-xs md:text-sm text-green-700">Urgency</div>
-                          <div className="font-medium text-green-900 text-sm md:text-base">{selectedResult.urgency === 'routine' ? 'Routine - No Urgent Action Needed' : 'Urgent'}</div>
+                          <div className="text-sm text-green-700">Urgency</div>
+                          <div className="font-medium text-green-900 text-base">{selectedResult.urgency === 'routine' ? 'Routine - No Urgent Action Needed' : 'Urgent'}</div>
                         </div>
                         <div>
-                          <div className="text-xs md:text-sm text-green-700">Overall Assessment</div>
-                          <div className="font-medium text-green-900 text-sm md:text-base">{selectedResult.isAbnormal ? 'Abnormal - Follow-up Required' : 'Normal - No Action Required'}</div>
+                          <div className="text-sm text-green-700">Overall Assessment</div>
+                          <div className="font-medium text-green-900 text-base">{selectedResult.isAbnormal ? 'Abnormal - Follow-up Required' : 'Normal - No Action Required'}</div>
                         </div>
                       </div>
                     </div>
@@ -753,73 +748,71 @@ export default function LabResultsPage() {
                   {/* Test Parameters */}
                   {selectedResult.parameters.length > 0 && (
                     <div>
-                      <h4 className="text-base md:text-lg font-bold text-slate-900 mb-3 md:mb-4">Test Parameters</h4>
+                      <h4 className="text-lg font-bold text-gray-900 mb-4">Test Parameters</h4>
                       
-                      <div className="overflow-x-auto -mx-4 md:mx-0">
-                        <div className="min-w-full px-4 md:px-0">
-                          <table className="w-full">
-                            <thead>
-                              <tr className="border-b border-slate-200">
-                                <th className="text-left py-2 px-3 md:py-3 md:px-4 text-xs md:text-sm font-medium text-slate-700">Parameter</th>
-                                <th className="text-left py-2 px-3 md:py-3 md:px-4 text-xs md:text-sm font-medium text-slate-700">Your Value</th>
-                                <th className="text-left py-2 px-3 md:py-3 md:px-4 text-xs md:text-sm font-medium text-slate-700">Normal Range</th>
-                                <th className="text-left py-2 px-3 md:py-3 md:px-4 text-xs md:text-sm font-medium text-slate-700">Status</th>
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="border-b border-gray-200">
+                              <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Parameter</th>
+                              <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Your Value</th>
+                              <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Normal Range</th>
+                              <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selectedResult.parameters.map((param: any, index: number) => (
+                              <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                                <td className="py-3 px-4">
+                                  <div className="font-medium text-gray-900 text-base">{param.name}</div>
+                                  <div className="text-sm text-gray-600">{param.unit}</div>
+                                </td>
+                                <td className="py-3 px-4">
+                                  <div className={`text-lg font-bold ${
+                                    param.status === 'normal' ? 'text-green-600' :
+                                    param.status === 'borderline' ? 'text-amber-600' :
+                                    'text-red-600'
+                                  }`}>
+                                    {param.value}
+                                  </div>
+                                </td>
+                                <td className="py-3 px-4">
+                                  <div className="text-gray-600 text-base">{param.normalRange}</div>
+                                </td>
+                                <td className="py-3 px-4">
+                                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                    param.status === 'normal' ? 'bg-green-100 text-green-700' :
+                                    param.status === 'borderline' ? 'bg-amber-100 text-amber-700' :
+                                    'bg-red-100 text-red-700'
+                                  }`}>
+                                    {param.status === 'normal' ? 'Normal' :
+                                     param.status === 'borderline' ? 'Borderline' : 'Abnormal'}
+                                  </span>
+                                </td>
                               </tr>
-                            </thead>
-                            <tbody>
-                              {selectedResult.parameters.map((param: any, index: number) => (
-                                <tr key={index} className="border-b border-slate-100 hover:bg-slate-50">
-                                  <td className="py-2 px-3 md:py-3 md:px-4">
-                                    <div className="font-medium text-slate-900 text-sm md:text-base">{param.name}</div>
-                                    <div className="text-xs md:text-sm text-slate-600">{param.unit}</div>
-                                  </td>
-                                  <td className="py-2 px-3 md:py-3 md:px-4">
-                                    <div className={`text-base md:text-lg font-bold ${
-                                      param.status === 'normal' ? 'text-green-600' :
-                                      param.status === 'borderline' ? 'text-amber-600' :
-                                      'text-red-600'
-                                    }`}>
-                                      {param.value}
-                                    </div>
-                                  </td>
-                                  <td className="py-2 px-3 md:py-3 md:px-4">
-                                    <div className="text-slate-600 text-sm md:text-base">{param.normalRange}</div>
-                                  </td>
-                                  <td className="py-2 px-3 md:py-3 md:px-4">
-                                    <span className={`px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium ${
-                                      param.status === 'normal' ? 'bg-green-100 text-green-700' :
-                                      param.status === 'borderline' ? 'bg-amber-100 text-amber-700' :
-                                      'bg-red-100 text-red-700'
-                                    }`}>
-                                      {param.status === 'normal' ? 'Normal' :
-                                       param.status === 'borderline' ? 'Borderline' : 'Abnormal'}
-                                    </span>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   )}
                   
                   {/* Doctor's Interpretation */}
                   {selectedResult.doctorNotes && (
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-200">
-                      <h4 className="font-bold text-purple-900 mb-2 md:mb-3 text-sm md:text-base">Doctor's Interpretation</h4>
-                      <div className="flex items-start gap-3 md:gap-4">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center flex-shrink-0">
-                          <Stethoscope className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                    <div className="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                      <h4 className="font-bold text-purple-900 mb-3 text-base">Doctor's Interpretation</h4>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0">
+                          <Stethoscope className="w-6 h-6 text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-purple-900 mb-1 text-sm md:text-base truncate">{selectedResult.orderedBy}</div>
-                          <div className="text-purple-700 italic text-sm md:text-base">"{selectedResult.doctorNotes}"</div>
-                          <div className="mt-2 md:mt-3 flex flex-wrap gap-2">
-                            <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 transition-all text-xs md:text-sm">
+                          <div className="font-medium text-purple-900 mb-1 text-base truncate">{selectedResult.orderedBy}</div>
+                          <div className="text-purple-700 italic text-base">"{selectedResult.doctorNotes}"</div>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            <button className="px-3 py-2 rounded-lg bg-white border border-purple-200 text-purple-700 hover:bg-purple-50 transition-all text-sm">
                               Book Follow-up
                             </button>
-                            <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-gradient-to-r from-purple-600 to-violet-500 text-white hover:from-purple-700 hover:to-violet-600 hover:shadow-lg transition-all text-xs md:text-sm">
+                            <button className="px-3 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-violet-500 text-white hover:from-purple-700 hover:to-violet-600 hover:shadow-lg transition-all text-sm">
                               Ask Questions
                             </button>
                           </div>
@@ -830,53 +823,53 @@ export default function LabResultsPage() {
                   
                   {/* Summary & Next Steps */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200">
-                      <h4 className="font-bold text-slate-900 mb-2 md:mb-3 text-sm md:text-base">Test Summary</h4>
-                      <p className="text-slate-700 text-sm md:text-base">{selectedResult.summary}</p>
+                    <div className="p-4 rounded-xl border border-gray-200">
+                      <h4 className="font-bold text-gray-900 mb-3 text-base">Test Summary</h4>
+                      <p className="text-gray-700 text-base">{selectedResult.summary}</p>
                     </div>
                     
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200">
-                      <h4 className="font-bold text-slate-900 mb-2 md:mb-3 text-sm md:text-base">Recommended Next Steps</h4>
-                      <ul className="space-y-1.5 md:space-y-2">
+                    <div className="p-4 rounded-xl border border-gray-200">
+                      <h4 className="font-bold text-gray-900 mb-3 text-base">Recommended Next Steps</h4>
+                      <ul className="space-y-2">
                         <li className="flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 text-sm md:text-base">Share results with your primary doctor</span>
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700 text-base">Share results with your primary doctor</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 text-sm md:text-base">Schedule follow-up if recommended</span>
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700 text-base">Schedule follow-up if recommended</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 text-sm md:text-base">Maintain current healthy lifestyle</span>
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700 text-base">Maintain current healthy lifestyle</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 text-sm md:text-base">Next routine checkup in 6 months</span>
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700 text-base">Next routine checkup in 6 months</span>
                         </li>
                       </ul>
                     </div>
                   </div>
                   
                   {/* Actions */}
-                  <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-4 md:pt-6 border-t border-slate-200">
+                  <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
                     <button
                       onClick={() => setShowResultDetails(false)}
-                      className="flex-1 px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-all text-sm md:text-base"
+                      className="flex-1 px-4 py-3 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-all text-base"
                     >
                       Close
                     </button>
                     
                     <button
                       onClick={() => handleShareResult(selectedResult)}
-                      className="flex-1 px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2"
+                      className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-base flex items-center justify-center gap-2"
                     >
-                      <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                      <Share2 className="w-5 h-5" />
                       Share Results
                     </button>
                     
-                    <button className="flex-1 px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white font-medium hover:from-green-700 hover:to-emerald-600 hover:shadow-lg transition-all text-sm md:text-base flex items-center justify-center gap-1.5 md:gap-2">
-                      <DownloadIcon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                    <button className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white font-medium hover:from-green-700 hover:to-emerald-600 hover:shadow-lg transition-all text-base flex items-center justify-center gap-2">
+                      <DownloadIcon className="w-5 h-5" />
                       Download PDF
                     </button>
                   </div>
@@ -903,93 +896,93 @@ export default function LabResultsPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
             >
               <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl max-w-md w-full max-h-[95vh] overflow-y-auto">
-                <div className="p-4 md:p-6">
-                  <div className="flex items-center justify-between mb-4 md:mb-6">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900">Share Results</h3>
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900">Share Results</h3>
                     <button
                       onClick={() => setShowShareModal(false)}
-                      className="p-1.5 md:p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                      className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                     >
-                      <X className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+                      <X className="w-5 h-5 text-gray-600" />
                     </button>
                   </div>
                   
-                  <div className="space-y-4 md:space-y-6">
-                    <div className="p-3 md:p-4 rounded-lg md:rounded-xl bg-slate-50 border border-slate-200">
-                      <div className="font-medium text-slate-900 mb-1 text-sm md:text-base truncate">{selectedResult.testName}</div>
-                      <div className="text-xs md:text-sm text-slate-600">
+                  <div className="space-y-6">
+                    <div className="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                      <div className="font-medium text-gray-900 mb-1 text-base truncate">{selectedResult.testName}</div>
+                      <div className="text-sm text-gray-600">
                         {selectedResult.date} • {selectedResult.id}
                       </div>
                     </div>
                     
                     <div>
-                      <h4 className="font-medium text-slate-900 mb-2 md:mb-3 text-sm md:text-base">Share With</h4>
-                      <div className="space-y-2 md:space-y-3">
-                        <button className="w-full p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all flex items-center gap-2 md:gap-3">
-                          <User className="w-4 h-4 md:w-5 md:h-5 text-blue-600 flex-shrink-0" />
+                      <h4 className="font-medium text-gray-900 mb-3 text-base">Share With</h4>
+                      <div className="space-y-3">
+                        <button className="w-full p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all flex items-center gap-3">
+                          <User className="w-5 h-5 text-blue-600 flex-shrink-0" />
                           <div className="text-left min-w-0">
-                            <div className="font-medium text-slate-900 text-sm md:text-base">Your Doctor</div>
-                            <div className="text-xs md:text-sm text-slate-600 truncate">Share with your primary care physician</div>
+                            <div className="font-medium text-gray-900 text-base">Your Doctor</div>
+                            <div className="text-sm text-gray-600 truncate">Share with your primary care physician</div>
                           </div>
                         </button>
                         
-                        <button className="w-full p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all flex items-center gap-2 md:gap-3">
-                          <Share2 className="w-4 h-4 md:w-5 md:h-5 text-green-600 flex-shrink-0" />
+                        <button className="w-full p-4 rounded-xl border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all flex items-center gap-3">
+                          <Share2 className="w-5 h-5 text-green-600 flex-shrink-0" />
                           <div className="text-left min-w-0">
-                            <div className="font-medium text-slate-900 text-sm md:text-base">Another Doctor</div>
-                            <div className="text-xs md:text-sm text-slate-600 truncate">Share with specialist or other healthcare provider</div>
+                            <div className="font-medium text-gray-900 text-base">Another Doctor</div>
+                            <div className="text-sm text-gray-600 truncate">Share with specialist or other healthcare provider</div>
                           </div>
                         </button>
                         
-                        <button className="w-full p-3 md:p-4 rounded-lg md:rounded-xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50 transition-all flex items-center gap-2 md:gap-3">
-                          <Smartphone className="w-4 h-4 md:w-5 md:h-5 text-purple-600 flex-shrink-0" />
+                        <button className="w-full p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all flex items-center gap-3">
+                          <Smartphone className="w-5 h-5 text-purple-600 flex-shrink-0" />
                           <div className="text-left min-w-0">
-                            <div className="font-medium text-slate-900 text-sm md:text-base">Personal Copy</div>
-                            <div className="text-xs md:text-sm text-slate-600 truncate">Send to your email or phone</div>
+                            <div className="font-medium text-gray-900 text-base">Personal Copy</div>
+                            <div className="text-sm text-gray-600 truncate">Send to your email or phone</div>
                           </div>
                         </button>
                       </div>
                     </div>
                     
                     <div>
-                      <h4 className="font-medium text-slate-900 mb-2 md:mb-3 text-sm md:text-base">Share Options</h4>
-                      <div className="grid grid-cols-2 gap-2 md:gap-3">
-                        <button className="p-2.5 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-blue-200 hover:bg-blue-50 transition-all flex flex-col items-center">
-                          <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-blue-600 mb-1.5 md:mb-2" />
-                          <span className="text-xs md:text-sm font-medium text-slate-900">Message</span>
+                      <h4 className="font-medium text-gray-900 mb-3 text-base">Share Options</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button className="p-3 rounded-xl border border-gray-200 hover:border-blue-200 hover:bg-blue-50 transition-all flex flex-col items-center">
+                          <MessageSquare className="w-6 h-6 text-blue-600 mb-2" />
+                          <span className="text-sm font-medium text-gray-900">Message</span>
                         </button>
                         
-                        <button className="p-2.5 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-green-200 hover:bg-green-50 transition-all flex flex-col items-center">
-                          <Mail className="w-5 h-5 md:w-6 md:h-6 text-green-600 mb-1.5 md:mb-2" />
-                          <span className="text-xs md:text-sm font-medium text-slate-900">Email</span>
+                        <button className="p-3 rounded-xl border border-gray-200 hover:border-green-200 hover:bg-green-50 transition-all flex flex-col items-center">
+                          <Mail className="w-6 h-6 text-green-600 mb-2" />
+                          <span className="text-sm font-medium text-gray-900">Email</span>
                         </button>
                         
-                        <button className="p-2.5 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-red-200 hover:bg-red-50 transition-all flex flex-col items-center">
-                          <QrCode className="w-5 h-5 md:w-6 md:h-6 text-red-600 mb-1.5 md:mb-2" />
-                          <span className="text-xs md:text-sm font-medium text-slate-900">QR Code</span>
+                        <button className="p-3 rounded-xl border border-gray-200 hover:border-red-200 hover:bg-red-50 transition-all flex flex-col items-center">
+                          <QrCode className="w-6 h-6 text-red-600 mb-2" />
+                          <span className="text-sm font-medium text-gray-900">QR Code</span>
                         </button>
                         
-                        <button className="p-2.5 md:p-3 rounded-lg md:rounded-xl border border-slate-200 hover:border-purple-200 hover:bg-purple-50 transition-all flex flex-col items-center">
-                          <ExternalLink className="w-5 h-5 md:w-6 md:h-6 text-purple-600 mb-1.5 md:mb-2" />
-                          <span className="text-xs md:text-sm font-medium text-slate-900">Link</span>
+                        <button className="p-3 rounded-xl border border-gray-200 hover:border-purple-200 hover:bg-purple-50 transition-all flex flex-col items-center">
+                          <ExternalLink className="w-6 h-6 text-purple-600 mb-2" />
+                          <span className="text-sm font-medium text-gray-900">Link</span>
                         </button>
                       </div>
                     </div>
                     
-                    <div className="pt-3 md:pt-4 border-t border-slate-200">
-                      <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+                    <div className="pt-4 border-t border-gray-200">
+                      <div className="flex flex-col sm:flex-row gap-3">
                         <button
                           onClick={() => setShowShareModal(false)}
-                          className="flex-1 px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition-all text-sm md:text-base"
+                          className="flex-1 px-4 py-3 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-all text-base"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={() => setShowShareModal(false)}
-                          className="flex-1 px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-sm md:text-base"
+                          className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-teal-500 text-white font-medium hover:from-blue-700 hover:to-teal-600 hover:shadow-lg transition-all text-base"
                         >
                           Share Now
                         </button>

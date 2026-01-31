@@ -448,7 +448,7 @@ export default function MedicalRecordsPage() {
 
         <div className="flex flex-wrap gap-3">
           <Link
-            href="/hospital/patients/add"
+            href="/hospital/patients"
             className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 hover:border-slate-400 transition-all"
           >
             <UserPlus className="w-5 h-5" />
